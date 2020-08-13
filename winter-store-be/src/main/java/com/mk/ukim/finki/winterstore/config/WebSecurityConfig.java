@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers("/api/login").permitAll()
                 .and().authorizeRequests().antMatchers("/api/login/**").permitAll()
+                .and().authorizeRequests().antMatchers("/api/login/login").permitAll()
                 .and().authorizeRequests().antMatchers("/api/login/signup").permitAll()
                 .and().authorizeRequests().antMatchers("/contact/all").permitAll()
                 .anyRequest().authenticated().and().
@@ -69,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Add a filter to validate the tokens with every request
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

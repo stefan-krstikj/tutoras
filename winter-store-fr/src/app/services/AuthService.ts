@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SignUpRequest} from './SignUpRequest';
+import {catchError, map} from 'rxjs/operators';
+import {throwError} from 'rxjs';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -8,39 +11,51 @@ import {SignUpRequest} from './SignUpRequest';
 
 
 export class AuthService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private jwtHelperService: JwtHelperService) {
   }
 
-  login(username: string, password: string): void {
-
+  getAuthenticatedUsername(): string | null {
+    if (this.isAuthenticated()) {
+      return localStorage.getItem('username');
+    }
+    return null;
   }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    console.log('token', token);
+    return !this.jwtHelperService.isTokenExpired(token);
+  }
+
+
 
   signup(name: string, username: string, password: string): void {
     console.log('sending username', username);
     console.log('sending password', password);
 
     this.http.post('http://localhost:8082/api/login/signup', {
-      username: 'username_here', password: 'password_here'
+      username, password
     })
       .subscribe((response) => console.log('Response', response));
 
     console.log('finished sending post request');
   }
-  /*login(user: UserLoginRequest) {
-        user.username = user.username.toLowerCase()
-        return this.apiService.post(this.config.loginUrl, user).pipe(
-            catchError(err => throwError(err.error.error)),
-            map(userJwtToken => {
-                console.log('Login success');
-                localStorage.setItem(`username`, user.username);
-                let tokenStr = 'Bearer ' + userJwtToken.jwtToken;
-                localStorage.setItem(`token`, tokenStr);
 
-                this.getInfo();
-
-                return "Successfull login!";
-            }));
-    }
-*/
-
+  login(username: string, password: string): void {
+    username = username.toLowerCase();
+    this.http.post('http://localhost:8082/api/login/login', {
+      username, password
+    })
+      .pipe(
+      map(userJwtToken => {
+        console.log('Login success');
+        localStorage.setItem(`username`, username);
+        // @ts-ignore
+        const tokenStr = 'Bearer ' + userJwtToken.jwtToken;
+        localStorage.setItem(`token`, tokenStr);
+        return 'Successfull login!';
+      }))
+      .subscribe(response => console.log('login response', response));
+  }
 }

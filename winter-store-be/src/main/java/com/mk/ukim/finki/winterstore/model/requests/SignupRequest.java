@@ -1,11 +1,11 @@
-package com.mk.ukim.finki.winterstore.model;
+package com.mk.ukim.finki.winterstore.model.requests;
 
-public class SignUpRequest {
+public class SignupRequest {
     private String name;
     private String username;
     private String password;
 
-    public SignUpRequest(String name, String username, String password) {
+    public SignupRequest(String name, String username, String password) {
         this.name = name;
         this.username = username;
         this.password = password;

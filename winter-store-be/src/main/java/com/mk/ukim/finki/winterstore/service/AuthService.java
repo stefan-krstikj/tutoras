@@ -1,11 +1,12 @@
 package com.mk.ukim.finki.winterstore.service;
 
 
-import com.mk.ukim.finki.winterstore.model.SignUpRequest;
+import com.mk.ukim.finki.winterstore.model.requests.SignupRequest;
 import com.mk.ukim.finki.winterstore.model.User;
 
 public interface AuthService {
     User getCurrentUser();
     String getCurrentUserId();
-    User signUpUser(SignUpRequest request) throws Exception;
+    User signupUser(SignupRequest request) throws Exception;
+    String loginUser(SignupRequest request) throws Exception;
 }

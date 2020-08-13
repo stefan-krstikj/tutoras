@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../services/AuthService';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-dialog',
@@ -6,13 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-dialog.component.css']
 })
 export class LoginDialogComponent implements OnInit {
-
-  constructor() { }
+  email = '';
+  password = '';
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
+    if (this.authService.getAuthenticatedUsername) {
+      console.log('authenticated username: ', this.authService.getAuthenticatedUsername);
+      this.router.navigate(['home']);
+    }
   }
 
   login(): void {
-
+    this.authService.login(this.email, this.password);
   }
 }

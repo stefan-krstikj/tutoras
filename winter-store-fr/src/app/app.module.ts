@@ -10,6 +10,8 @@ import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {AuthInterceptor} from './auth.interceptor';
+import { HomeComponent } from './home/home.component';
+import {AuthGuard} from './auth.guard';
 
 
 
@@ -18,7 +20,8 @@ import {AuthInterceptor} from './auth.interceptor';
     AppComponent,
     NavbarComponent,
     LoginDialogComponent,
-    SignupDialogComponent
+    SignupDialogComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import {AuthInterceptor} from './auth.interceptor';
     FormsModule,
     HttpClientModule
   ],
-  providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+  // tslint:disable-next-line:max-line-length
+  providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService]
   ],
   bootstrap: [AppComponent]
