@@ -1,6 +1,7 @@
 package com.mk.ukim.finki.winterstore.service.impl;
 
 import com.mk.ukim.finki.winterstore.model.Role;
+import com.mk.ukim.finki.winterstore.model.SignUpRequest;
 import com.mk.ukim.finki.winterstore.model.User;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
@@ -43,11 +44,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User signUpUser(String username,
-                           String password) throws Exception {
+    public User signUpUser(SignUpRequest signUpRequest) throws Exception {
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setUsername(signUpRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         Role userRole = this.roleRepository.findByName("ROLE_USER");
         user.setRoles(Collections.singleton(userRole));
         return this.userService.registerUser(user);

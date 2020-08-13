@@ -1,17 +1,16 @@
 package com.mk.ukim.finki.winterstore.controllers;
 
+import com.mk.ukim.finki.winterstore.model.SignUpRequest;
 import com.mk.ukim.finki.winterstore.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@CrossOrigin
 @RequestMapping("/api/login")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SignUpController {
     Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
@@ -22,11 +21,8 @@ public class SignUpController {
     }
 
     @PostMapping("/signup")
-    public String signUp(@RequestParam String name,
-                         @RequestParam String username,
-                         @RequestParam String password) throws Exception {
-        logger.info("Received signup for: " + username + " " + password);
-//        this.authService.signUpUser(username,password);
+    public String signUp(@RequestBody SignUpRequest request) throws Exception {
+        this.authService.signUpUser(request);
         return "Successfull signup";
     }
 }

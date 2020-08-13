@@ -7,7 +7,10 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SignupDialogComponent } from './signup-dialog/signup-dialog.component';
 import {FormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
+import {AuthInterceptor} from './auth.interceptor';
+
 
 
 @NgModule({
@@ -24,7 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
