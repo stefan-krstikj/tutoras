@@ -21,6 +21,8 @@ export class LoginDialogComponent implements OnInit {
   }
 
   login(): void {
-    this.authService.login(this.email, this.password);
+    this.authService.login(this.email, this.password).subscribe(response => {
+      this.router.navigate(['home']);
+    });
   }
 }

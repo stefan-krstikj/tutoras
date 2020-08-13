@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SignUpRequest} from './SignUpRequest';
 import {catchError, map} from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
@@ -24,7 +24,6 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    console.log('token', token);
     return !this.jwtHelperService.isTokenExpired(token);
   }
 
@@ -42,9 +41,10 @@ export class AuthService {
     console.log('finished sending post request');
   }
 
-  login(username: string, password: string): void {
+  // @ts-ignore
+  login(username: string, password: string): Observable<string>{
     username = username.toLowerCase();
-    this.http.post('http://localhost:8082/api/login/login', {
+    return this.http.post('http://localhost:8082/api/login/login', {
       username, password
     })
       .pipe(
@@ -55,7 +55,11 @@ export class AuthService {
         const tokenStr = 'Bearer ' + userJwtToken.jwtToken;
         localStorage.setItem(`token`, tokenStr);
         return 'Successfull login!';
-      }))
-      .subscribe(response => console.log('login response', response));
+      }));
+      // .subscribe(response => console.log('login response', response));
+  }
+
+  logout(): void{
+    localStorage.clear();
   }
 }
