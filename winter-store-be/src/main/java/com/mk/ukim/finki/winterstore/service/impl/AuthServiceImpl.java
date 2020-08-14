@@ -1,11 +1,15 @@
 package com.mk.ukim.finki.winterstore.service.impl;
 
 import com.mk.ukim.finki.winterstore.jwt.JwtTokenUtil;
+import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.SignupRequest;
 import com.mk.ukim.finki.winterstore.model.User;
+import com.mk.ukim.finki.winterstore.model.response.LoginResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
+import com.mk.ukim.finki.winterstore.repository.UserDetailedRepository;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
 import com.mk.ukim.finki.winterstore.service.AuthService;
+import com.mk.ukim.finki.winterstore.service.UserDetailedService;
 import com.mk.ukim.finki.winterstore.service.UserService;
 import com.mk.ukim.finki.winterstore.validators.UserValidator;
 import org.slf4j.Logger;
@@ -33,8 +37,10 @@ public class AuthServiceImpl implements AuthService {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    UserDetailedRepository userDetailedRepository;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public AuthServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
@@ -75,14 +81,15 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String loginUser(SignupRequest request) throws Exception {
+    public LoginResponse loginUser(SignupRequest request) throws Exception {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetails userDetails = userService
                 .loadUserByUsername(request.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
-        return token;
+
+        return new LoginResponse(token);
     }
 
 

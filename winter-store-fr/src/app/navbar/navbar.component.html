@@ -5,8 +5,8 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <mat-icon class="mat-icon mr-3" inline=true>ac_unit</mat-icon>
-    <a class="navbar-brand" href="#">Winter Store</a>
+    <mat-icon class="mat-icon mr-3" inline=true>square_foot</mat-icon>
+    <a class="navbar-brand" href="#">Tutoras</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" *ngIf="isAuthenticated()">
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/home']">Home<span class="sr-only">(current)</span></a>
@@ -40,6 +40,7 @@
           <mat-icon class="mat-icon ml-3 mr-3" inline=true>account_circle</mat-icon>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button" [routerLink]="['/profile']">Profile</button>
           <button class="dropdown-item" type="button" (click)="logout()">Logout</button>
         </div>
       </div>

@@ -2,7 +2,7 @@ package com.mk.ukim.finki.winterstore.config;
 
 import com.mk.ukim.finki.winterstore.jwt.JwtAuthenticationEntryPoint;
 import com.mk.ukim.finki.winterstore.jwt.JwtRequestFilter;
-import com.mk.ukim.finki.winterstore.service.impl.UserDetailsServiceImpl;
+import com.mk.ukim.finki.winterstore.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +15,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    private UserDetailsServiceImpl jwtUserDetailsService;
+    private UserServiceImpl jwtUserDetailsService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
@@ -59,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and();
 
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/api/login").permitAll()
+                .authorizeRequests().antMatchers("/api/login", "/api/users/", "/api/users/tutors", "/api/users/students").permitAll()
                 .and().authorizeRequests().antMatchers("/api/login/**").permitAll()
                 .and().authorizeRequests().antMatchers("/api/login/login").permitAll()
                 .and().authorizeRequests().antMatchers("/api/login/signup").permitAll()

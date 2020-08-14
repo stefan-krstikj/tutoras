@@ -4,6 +4,7 @@ import {SignUpRequest} from './SignUpRequest';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {UserDetailed} from '../model/user-detailed';
 
 @Injectable({
   providedIn: 'root'
@@ -30,15 +31,10 @@ export class AuthService {
 
 
   signup(name: string, username: string, password: string): void {
-    console.log('sending username', username);
-    console.log('sending password', password);
-
     this.http.post('http://localhost:8082/api/login/signup', {
       username, password
-    })
-      .subscribe((response) => console.log('Response', response));
+    }).subscribe((response) => console.log('Response', response));
 
-    console.log('finished sending post request');
   }
 
   // @ts-ignore
@@ -48,11 +44,11 @@ export class AuthService {
       username, password
     })
       .pipe(
-      map(userJwtToken => {
+      map( response => {
         console.log('Login success');
         localStorage.setItem(`username`, username);
         // @ts-ignore
-        const tokenStr = 'Bearer ' + userJwtToken.jwtToken;
+        const tokenStr = 'Bearer ' + response.jwtToken;
         localStorage.setItem(`token`, tokenStr);
         return 'Successfull login!';
       }));

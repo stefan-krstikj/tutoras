@@ -1,5 +1,6 @@
 package com.mk.ukim.finki.winterstore.service.impl;
 
+import com.mk.ukim.finki.winterstore.model.Role;
 import com.mk.ukim.finki.winterstore.model.User;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
 import com.mk.ukim.finki.winterstore.service.UserService;
@@ -8,8 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserDetailsServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;

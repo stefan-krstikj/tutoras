@@ -5,11 +5,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {SignupDialogComponent} from './signup-dialog/signup-dialog.component';
 import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './auth.guard';
+import {UserProfileComponent} from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginDialogComponent},
   {path: 'signup', component: SignupDialogComponent},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'login'},
 ];
 

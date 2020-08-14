@@ -1,9 +1,9 @@
 package com.mk.ukim.finki.winterstore.model.response;
 
-public class TokenResponse {
+public class LoginResponse {
     private String jwtToken;
 
-    public TokenResponse(String jwtToken) {
+    public LoginResponse(String jwtToken) {
         this.jwtToken = jwtToken;
     }
 

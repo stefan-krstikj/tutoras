@@ -12,6 +12,7 @@ import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 import {AuthInterceptor} from './auth.interceptor';
 import { HomeComponent } from './home/home.component';
 import {AuthGuard} from './auth.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
@@ -21,7 +22,8 @@ import {AuthGuard} from './auth.guard';
     NavbarComponent,
     LoginDialogComponent,
     SignupDialogComponent,
-    HomeComponent
+    HomeComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

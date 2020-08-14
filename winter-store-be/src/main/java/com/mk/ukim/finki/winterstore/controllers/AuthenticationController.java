@@ -1,16 +1,14 @@
 package com.mk.ukim.finki.winterstore.controllers;
 
+import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.SignupRequest;
-import com.mk.ukim.finki.winterstore.model.response.TokenResponse;
+import com.mk.ukim.finki.winterstore.model.response.LoginResponse;
 import com.mk.ukim.finki.winterstore.service.AuthService;
-import net.minidev.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 
 @Controller
 @RequestMapping("/api/login")
@@ -31,10 +29,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody SignupRequest request) throws Exception{
+    public ResponseEntity<LoginResponse> login(@RequestBody SignupRequest request) throws Exception{
         logger.info("received login for [{}]", request.getUsername());
-        String token = this.authService.loginUser(request);
-        logger.info(", responding with token [{}]", token);
-        return ResponseEntity.ok(new TokenResponse(token));
+        return ResponseEntity.ok(this.authService.loginUser(request));
     }
 }
