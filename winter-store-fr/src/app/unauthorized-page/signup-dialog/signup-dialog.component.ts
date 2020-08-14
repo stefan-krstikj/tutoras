@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../services/AuthService';
+import {AuthService} from '../../services/AuthService';
 import {FormControl} from '@angular/forms';
+import {UserService} from '../../services/UserService';
+import {UserDetailed} from '../../model/user-detailed';
 
 @Component({
   selector: 'app-signup-dialog',

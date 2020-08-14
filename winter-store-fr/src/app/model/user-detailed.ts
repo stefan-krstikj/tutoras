@@ -3,7 +3,8 @@ export interface UserDetailed {
   lastName: string;
   phoneNumber: string;
   biography: string;
-  // todo
-  // "freeTimeSlots": [],
-  // "subjects": []
+  id: number;
+  freeTimeSlots: [];
+  subjects: [];
+  roles: [];
 }

@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-6 col-lg-9 mx-auto">
+      <div class="card card-signin">
+        <div class="card-body">
+          <h5 class="card-title text-center mb-1">{{userDetailed.firstName}} {{userDetailed.lastName}}</h5>
+          <h6 class="card-title text-center text-info font-weight-bold">{{getUserRoles()}}</h6>
+          <form class="form-signin" (ngSubmit)="update()">
+            <div class="form-label-group">
+              <input type="text" id="firstName" class="form-control" placeholder="First Name" name="firstName"
+                     [(ngModel)]="userDetailed.firstName">
+            </div>
+            <div class="form-label-group">
+              <input type="text" id="lastName" class="form-control" placeholder="Last Name" name="lastName"
+                     [(ngModel)]="userDetailed.lastName">
+            </div>
+            <div class="form-label-group">
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" disabled
+                     [(ngModel)]="email">
+            </div>
+            <div class="form-label-group">
+              <input type="text" id="phoneNumber" class="form-control" placeholder="Phone number" name="phoneNumber"
+                     [(ngModel)]="userDetailed.phoneNumber">
+            </div>
+            <div class="form-label-group">
+              <textarea type="text" id="biography" class="form-control" placeholder="Biography" name="biography"
+                        [(ngModel)]="userDetailed.biography"></textarea>
+            </div>
+            <br>
+            <label for="password">Change password</label>
+            <div class="form-label-group">
+              <input type="password" id="password" class="form-control" placeholder="Password" name="password"
+                     [(ngModel)]="password">
+            </div>
+            <div class="form-label-group">
+              <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat Password"
+                     name="repeatPassword" [(ngModel)]="repeatPassword">
+            </div>
+            <div>
+              <button class="btn-danger btn-sm float-right mb-3" (click)="changePassword()">Change password</button>
+            </div>
+            <br><br>
+            <hr>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Update
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
