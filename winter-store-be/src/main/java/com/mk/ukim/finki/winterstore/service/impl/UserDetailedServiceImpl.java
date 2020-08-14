@@ -1,12 +1,17 @@
 package com.mk.ukim.finki.winterstore.service.impl;
 
 import com.mk.ukim.finki.winterstore.model.*;
+import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
+import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
 import com.mk.ukim.finki.winterstore.repository.UserDetailedRepository;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
 import com.mk.ukim.finki.winterstore.service.UserDetailedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +34,9 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     @Autowired
     SubjectRepository subjectRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public UserDetailed saveUserDetails(UserDetailed userDetails) {
         return this.userDetailedRepository.save(userDetails);
@@ -50,13 +58,13 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     }
 
     @Override
-    public List<UserDetailed> findAllBySubject(String subject){
+    public List<UserDetailed> findAllBySubject(String subject) {
         Subject subjectObject = subjectRepository.findByName(subject);
         return userDetailedRepository.findAllBySubjectsContaining(subjectObject);
     }
 
     @Override
-    public List<UserDetailed> findAllByFirstNameAndLastName(String name){
+    public List<UserDetailed> findAllByFirstNameAndLastName(String name) {
         List<UserDetailed> userDetailsContainingFirstName = findAllByFirstName(name);
         List<UserDetailed> userDetailsContainingLastName = findAllByLastName(name);
         return userDetailsContainingFirstName
@@ -94,7 +102,7 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         Role roleObject = roleRepository.findByName(role);
         List<User> usersWithRole = userRepository.findAllByRolesContaining(roleObject);
         List<UserDetailed> userDetailsWithRole = new ArrayList<>();
-        for(User u : usersWithRole)
+        for (User u : usersWithRole)
             userDetailsWithRole.add(userDetailedRepository.findByUser(u));
         return userDetailsWithRole;
     }
@@ -102,6 +110,39 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     @Override
     public UserDetailed findById(Integer id) {
         return userDetailedRepository.findById(id);
+    }
+
+    @Override
+    public UserDetailsResponse findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        UserDetailed userDetailed = userDetailedRepository.findByUser(user);
+        List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
+
+        return new UserDetailsResponse(
+                userDetailed.getId(), userDetailed.getFirstName(),
+                userDetailed.getLastName(), userDetailed.getPhoneNumber(),
+                userDetailed.getBiography(), userDetailed.getFreeTimeSlots(),
+                userDetailed.getSubjects(), roles);
+    }
+
+    // todo chagnge implementation, this is obviously bad security
+    @Override
+    public String changePassword(ChangePasswordRequest changePasswordRequest) {
+        User user = userRepository.findByUsername(changePasswordRequest.getUsername());
+        userRepository.changePasswordForUserWithId(user.getId(),
+                this.passwordEncoder.encode(changePasswordRequest.getPassword()));
+        return "Password changed";
+    }
+
+    @Override
+    public String updateUserInformation(UpdateUserDetailsRequest updateUserDetailsRequest) {
+        userDetailedRepository.updateUserDetails(
+                updateUserDetailsRequest.getId(),
+                updateUserDetailsRequest.getFirstName(),
+                updateUserDetailsRequest.getLastName(),
+                updateUserDetailsRequest.getPhoneNumber(),
+                updateUserDetailsRequest.getBiography());
+        return "User successfully updated";
     }
 
 

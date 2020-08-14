@@ -1,49 +1,45 @@
-package com.mk.ukim.finki.winterstore.model;
+package com.mk.ukim.finki.winterstore.model.response;
+
+import com.mk.ukim.finki.winterstore.model.TimeSlot;
+import com.mk.ukim.finki.winterstore.model.User;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "user_details")
-public class UserDetailed {
+public class UserDetailsResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
-    @OneToOne
-    private User user;
-
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "phone")
     private String phoneNumber;
 
-    @Column(name = "biography")
     private String biography;
-
-    @Column(name = "time_slots")
-    @ManyToMany
     private List<TimeSlot> freeTimeSlots;
 
-    @Column(name = "subjects")
-    @ManyToMany
     private List<TimeSlot> subjects;
 
-    public UserDetailed() {
+    private List<String> roles;
+
+    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlot> freeTimeSlots, List<TimeSlot> subjects, List<String> roles) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.biography = biography;
+        this.freeTimeSlots = freeTimeSlots;
+        this.subjects = subjects;
+        this.roles = roles;
     }
 
-    public User getUser() {
-        return user;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public Integer getId() {
@@ -102,3 +98,5 @@ public class UserDetailed {
         this.subjects = subjects;
     }
 }
+
+

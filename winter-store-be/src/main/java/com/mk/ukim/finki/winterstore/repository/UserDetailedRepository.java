@@ -2,7 +2,10 @@ package com.mk.ukim.finki.winterstore.repository;
 
 import com.mk.ukim.finki.winterstore.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserDetailedRepository extends JpaRepository<UserDetailed, Long> {
@@ -14,4 +17,10 @@ public interface UserDetailedRepository extends JpaRepository<UserDetailed, Long
     List<UserDetailed> findAllByFreeTimeSlots(TimeSlot timeSlot);
 
     UserDetailed findById(Integer id);
+
+    @Transactional
+    @Modifying
+    @Query("update UserDetailed ud set ud.firstName = :firstName, ud.lastName=:lastName, ud.phoneNumber = :phoneNumber" +
+            ", ud.biography=:bio where ud.id = :id")
+    int updateUserDetails(Integer id, String firstName, String lastName, String phoneNumber, String bio);
 }

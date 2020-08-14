@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -34,9 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // configure AuthenticationManager so that it knows from where to load
-        // user for matching credentials
-        // Use BCryptPasswordEncoder
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -53,31 +51,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        // We don't need CSRF for this example
-        httpSecurity.cors().and();
+        httpSecurity
+                .httpBasic()
+                .and().cors().and()
+                .authorizeRequests()
+                .antMatchers("/", "/api/login", "/api/login/signup", "/api/login/login")
+                .permitAll()
+                .antMatchers("/api/users/change-password").permitAll()
+                .antMatchers("/api/users/update-details").permitAll()
+                .anyRequest().authenticated()
+//                        .and()
+//                    .formLogin()
+//                        .loginPage("/login").permitAll()
+//                        .and()
+//                    .logout()
+//                        .permitAll()
+                .and()
+                .csrf().disable()
 
-        httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/api/login", "/api/users/", "/api/users/tutors", "/api/users/students").permitAll()
-                .and().authorizeRequests().antMatchers("/api/login/**").permitAll()
-                .and().authorizeRequests().antMatchers("/api/login/login").permitAll()
-                .and().authorizeRequests().antMatchers("/api/login/signup").permitAll()
-                .and().authorizeRequests().antMatchers("/contact/all").permitAll()
-                .anyRequest().authenticated().and().
-
-                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // Add a filter to validate the tokens with every request
-//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//         Add a filter to validate the tokens with every request
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.GET, "/products/**")
-                .and().ignoring().antMatchers(HttpMethod.GET, "/review")
-                .and().ignoring().antMatchers("/contact/send")
-                .and().ignoring().antMatchers("/products");
-
-
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers(HttpMethod.GET, "/products/**")
+//                .and().ignoring().antMatchers(HttpMethod.GET, "/review")
+//                .and().ignoring().antMatchers("/contact/send")
+//                .and().ignoring().antMatchers("/products");
+//    }
 }

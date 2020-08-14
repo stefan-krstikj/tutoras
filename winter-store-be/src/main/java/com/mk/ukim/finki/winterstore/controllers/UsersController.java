@@ -1,15 +1,16 @@
 package com.mk.ukim.finki.winterstore.controllers;
 
 import com.mk.ukim.finki.winterstore.model.UserDetailed;
+import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
+import com.mk.ukim.finki.winterstore.model.response.StringResponse;
+import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.service.UserDetailedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class UsersController {
         this.userDetailedService = userDetailedService;
     }
 
-    @GetMapping("/{id}")
-    ResponseEntity<UserDetailed> findById(@RequestParam Integer id){
-        return ResponseEntity.ok(userDetailedService.findById(id));
+    @GetMapping("/{username}")
+    ResponseEntity<UserDetailsResponse> findById(@PathVariable String username){
+        return ResponseEntity.ok(userDetailedService.findByUsername(username));
     }
 
     @GetMapping("/tutors")
@@ -58,5 +59,15 @@ public class UsersController {
     @GetMapping("/students/name/{name}")
     ResponseEntity<List<UserDetailed>> findAllStudentsByName(@RequestParam String name){
         return ResponseEntity.ok(userDetailedService.findAllByNameContainingAndRole(name, "student"));
+    }
+
+    @PostMapping("/change-password")
+    ResponseEntity<StringResponse> changePassowrd(@RequestBody ChangePasswordRequest changePasswordRequest){
+        return ResponseEntity.ok(new StringResponse(userDetailedService.changePassword(changePasswordRequest)));
+    }
+
+    @PostMapping("/update-details")
+    ResponseEntity<StringResponse> updateUserInformation(@RequestBody UpdateUserDetailsRequest updateUserDetailsRequest){
+        return ResponseEntity.ok(new StringResponse(userDetailedService.updateUserInformation(updateUserDetailsRequest)));
     }
 }
