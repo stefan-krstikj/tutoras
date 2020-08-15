@@ -8,7 +8,7 @@ import {UserService} from '../../services/UserService';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  userDetailed: UserDetailed = {roles: [], id: 0, freeTimeSlots: [], subjects: [], biography: '', firstName: '', lastName: '', phoneNumber: ''};
+  userDetailed: UserDetailed = {role: '', id: 0, freeTimeSlots: [], subjects: [], biography: '', firstName: '', lastName: '', phoneNumber: ''};
   email = localStorage.getItem('username');
   password = '';
   repeatPassword = '';
@@ -31,12 +31,11 @@ export class UserProfileComponent implements OnInit {
     }
     this.userService.changePassword(this.password);
   }
+
   update(): void{
     this.userService.updateDetails(this.userDetailed);
   }
-  getUserRoles(): string[]{
-      return this.userDetailed.roles.map(it => this.capitalizeFirstLetter(it));
-  }
+
   capitalizeFirstLetter(word: string): string{
     return word.charAt(0).toUpperCase() + word.slice(1);
   }

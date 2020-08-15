@@ -4,7 +4,7 @@
       <div class="card card-signin">
         <div class="card-body">
           <h5 class="card-title text-center mb-1">{{userDetailed.firstName}} {{userDetailed.lastName}}</h5>
-          <h6 class="card-title text-center text-info font-weight-bold">{{getUserRoles()}}</h6>
+          <h6 class="card-title text-center text-info font-weight-bold">{{capitalizeFirstLetter(userDetailed.role)}}</h6>
           <form class="form-signin" (ngSubmit)="update()">
             <div class="form-label-group">
               <input type="text" id="firstName" class="form-control" placeholder="First Name" name="firstName"

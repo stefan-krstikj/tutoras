@@ -25,8 +25,7 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<StringResponse> signup(@RequestBody SignupRequest request) throws Exception {
-        this.authService.signupUser(request);
-        return ResponseEntity.ok(new StringResponse("Successfull signup"));
+        return ResponseEntity.ok(this.authService.signupUser(request));
     }
 
     @PostMapping("/login")

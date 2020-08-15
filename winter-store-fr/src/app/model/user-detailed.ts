@@ -8,5 +8,5 @@ export interface UserDetailed {
   id: number;
   freeTimeSlots: [];
   subjects: Subject[];
-  roles: [];
+  role: string;
 }

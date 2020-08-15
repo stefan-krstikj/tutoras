@@ -100,7 +100,7 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     @Override
     public List<UserDetailed> findAllByRole(String role) {
         Role roleObject = roleRepository.findByName(role);
-        List<User> usersWithRole = userRepository.findAllByRolesContaining(roleObject);
+        List<User> usersWithRole = userRepository.findAllByRoleContaining(roleObject);
         List<UserDetailed> userDetailsWithRole = new ArrayList<>();
         for (User u : usersWithRole)
             userDetailsWithRole.add(userDetailedRepository.findByUser(u));
@@ -116,13 +116,13 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     public UserDetailsResponse findByUsername(String username) {
         User user = userRepository.findByUsername(username);
         UserDetailed userDetailed = userDetailedRepository.findByUser(user);
-        List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
+        Role role = user.getRole();
 
         UserDetailsResponse response = new UserDetailsResponse(
                 userDetailed.getId(), userDetailed.getFirstName(),
                 userDetailed.getLastName(), userDetailed.getPhoneNumber(),
                 userDetailed.getBiography(), userDetailed.getFreeTimeSlots(),
-                mapSubjectToSubjectResponse(userDetailed.getSubjects()), roles);
+                mapSubjectToSubjectResponse(userDetailed.getSubjects()), role.getName());
         return response;
     }
 

@@ -1,17 +1,17 @@
 package com.mk.ukim.finki.winterstore.service.impl;
 
 import com.mk.ukim.finki.winterstore.jwt.JwtTokenUtil;
-import com.mk.ukim.finki.winterstore.model.Subject;
+import com.mk.ukim.finki.winterstore.model.Role;
 import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.SignupRequest;
 import com.mk.ukim.finki.winterstore.model.User;
 import com.mk.ukim.finki.winterstore.model.response.LoginResponse;
+import com.mk.ukim.finki.winterstore.model.response.StringResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
 import com.mk.ukim.finki.winterstore.repository.UserDetailedRepository;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
 import com.mk.ukim.finki.winterstore.service.AuthService;
-import com.mk.ukim.finki.winterstore.service.UserDetailedService;
 import com.mk.ukim.finki.winterstore.service.UserService;
 import com.mk.ukim.finki.winterstore.validators.UserValidator;
 import org.slf4j.Logger;
@@ -27,8 +27,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -72,21 +70,26 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User signupUser(SignupRequest signUpRequest) throws Exception {
+    public StringResponse signupUser(SignupRequest signUpRequest) throws Exception {
         signUpRequest.setUsername(signUpRequest.getUsername().toLowerCase());
 
         try{
             UserValidator.validateSignUpRequest(signUpRequest, userRepository);
         }catch (Exception e){
             logger.error(e.getLocalizedMessage());
+            return new StringResponse(e.getMessage());
         }
-        User user = new User(signUpRequest.getUsername(), this.passwordEncoder.encode(signUpRequest.getPassword()));
+
+        Role role = roleRepository.findByName(signUpRequest.getRole());
+        User user = new User(signUpRequest.getUsername(), this.passwordEncoder.encode(signUpRequest.getPassword()), role);
+
         UserDetailed userDetailed = new UserDetailed();
+        userDetailed.setFirstName(signUpRequest.getName());
         userDetailed.setUser(user);
+
         this.userDetailedRepository.save(userDetailed);
-//        Role userRole = this.roleRepository.findByName("ROLE_USER");
-//        user.setRoles(Collections.singleton(userRole));
-        return this.userService.registerUser(user);
+        this.userService.registerUser(user);
+        return new StringResponse("Successful signup");
     }
 
     @Override
@@ -105,10 +108,10 @@ public class AuthServiceImpl implements AuthService {
     @PostConstruct
     public void init() {
         // todo fix this
-        if (!this.userRepository.existsByUsername("admin")) {
-            User admin = new User("admin", this.passwordEncoder.encode("admin"));
+//        if (!this.userRepository.existsByUsername("admin")) {
+//            User admin = new User("admin", this.passwordEncoder.encode("admin"));
 //            admin.setRoles();
-            this.userRepository.save(admin);
+//            this.userRepository.save(admin);
         }
-    }
+
 }

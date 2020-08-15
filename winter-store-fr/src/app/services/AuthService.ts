@@ -29,9 +29,9 @@ export class AuthService {
   }
 
 
-  signup(name: string, username: string, password: string): Observable<string> {
+  signup(name: string, username: string, password: string, role: string): Observable<string> {
     return this.http.post('http://localhost:8082/api/login/signup', {
-      name, username, password
+      name, username, password, role
     }).pipe(
       map((response: string) => response)
     );

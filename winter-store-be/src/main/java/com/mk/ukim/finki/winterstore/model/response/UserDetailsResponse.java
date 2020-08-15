@@ -24,9 +24,9 @@ public class UserDetailsResponse {
 
     private List<SubjectResponse> subjects;
 
-    private List<String> roles;
+    private String role;
 
-    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlot> freeTimeSlots, List<SubjectResponse> subjects, List<String> roles) {
+    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlot> freeTimeSlots, List<SubjectResponse> subjects, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,15 +34,15 @@ public class UserDetailsResponse {
         this.biography = biography;
         this.freeTimeSlots = freeTimeSlots;
         this.subjects = subjects;
-        this.roles = roles;
+        this.role = role;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Integer getId() {

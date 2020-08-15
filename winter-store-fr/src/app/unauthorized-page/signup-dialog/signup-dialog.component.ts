@@ -16,6 +16,9 @@ export class SignupDialogComponent implements OnInit {
   email = '';
   password = '';
   repeatPassword = '';
+
+  radioSelected = 'student';
+
   constructor(private authService: AuthService,
               private router: Router) { }
 
@@ -23,10 +26,11 @@ export class SignupDialogComponent implements OnInit {
   }
 
   register(): void{
+    console.log('radio', this.radioSelected)
     console.log('name', this.name);
     console.log('email', this.email);
     console.log('password', this.password);
-    this.authService.signup(this.name, this.email, this.password).subscribe(
+    this.authService.signup(this.name, this.email, this.password, this.radioSelected).subscribe(
       respnose => {
         this.router.navigate(['/login'])
       }

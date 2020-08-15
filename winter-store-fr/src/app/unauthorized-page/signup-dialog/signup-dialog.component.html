@@ -33,6 +33,19 @@
               <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat Password" required [(ngModel)]="repeatPassword"
                      name="repeatPassword">
             </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="role-choice" id="studentRadio" value="student" [(ngModel)]="radioSelected">
+              <label class="form-check-label" for="studentRadio">
+                Student
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="role-choice" id="tutorRadio" value="tutor" [(ngModel)]="radioSelected">
+              <label class="form-check-label" for="tutorRadio">
+                Tutor
+              </label>
+            </div>
             <hr class="my-4">
             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
           </form>

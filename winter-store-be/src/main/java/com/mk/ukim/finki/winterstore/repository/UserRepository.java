@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
     Boolean existsByUsername(String username);
-    List<User> findAllByRolesContaining(Role role);
+    List<User> findAllByRoleContaining(Role role);
 
     @Transactional
     @Modifying
