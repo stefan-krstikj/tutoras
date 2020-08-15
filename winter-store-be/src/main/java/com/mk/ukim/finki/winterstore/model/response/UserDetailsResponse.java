@@ -20,13 +20,14 @@ public class UserDetailsResponse {
     private String phoneNumber;
 
     private String biography;
-    private List<TimeSlot> freeTimeSlots;
+
+    private List<TimeSlotResponse> freeTimeSlots;
 
     private List<SubjectResponse> subjects;
 
     private String role;
 
-    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlot> freeTimeSlots, List<SubjectResponse> subjects, String role) {
+    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlotResponse> freeTimeSlots, List<SubjectResponse> subjects, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -85,11 +86,11 @@ public class UserDetailsResponse {
         this.biography = biography;
     }
 
-    public List<TimeSlot> getFreeTimeSlots() {
+    public List<TimeSlotResponse> getFreeTimeSlots() {
         return freeTimeSlots;
     }
 
-    public void setFreeTimeSlots(List<TimeSlot> freeTimeSlots) {
+    public void setFreeTimeSlots(List<TimeSlotResponse> freeTimeSlots) {
         this.freeTimeSlots = freeTimeSlots;
     }
 

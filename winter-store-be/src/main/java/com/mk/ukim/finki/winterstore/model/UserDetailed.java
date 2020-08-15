@@ -32,10 +32,14 @@ public class UserDetailed {
     @Column(name = "biography")
     private String biography;
 
-    @Column(name = "time_slots")
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_detailed_time_slots",
+            joinColumns = {
+                    @JoinColumn(name = "user_detailed_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "time_slot_id", referencedColumnName = "id")})
     @JsonIgnore
-    private List<TimeSlot> freeTimeSlots;
+    private Set<TimeSlot> timeSlots = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_detailed_subjects",
@@ -97,12 +101,12 @@ public class UserDetailed {
         this.biography = biography;
     }
 
-    public List<TimeSlot> getFreeTimeSlots() {
-        return freeTimeSlots;
+    public Set<TimeSlot> getTimeSlots() {
+        return timeSlots;
     }
 
-    public void setFreeTimeSlots(List<TimeSlot> freeTimeSlots) {
-        this.freeTimeSlots = freeTimeSlots;
+    public void setTimeSlots(Set<TimeSlot> timeSlots) {
+        this.timeSlots = timeSlots;
     }
 
     public Set<Subject> getSubjects() {

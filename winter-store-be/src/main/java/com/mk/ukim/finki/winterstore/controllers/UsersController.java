@@ -4,6 +4,7 @@ import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserTimeSlotsRequest;
 import com.mk.ukim.finki.winterstore.model.response.StringResponse;
 import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.service.UserDetailedService;
@@ -74,7 +75,17 @@ public class UsersController {
     }
 
     @PostMapping("/update-subjects")
-    ResponseEntity<StringResponse> updateUserInformation(@RequestBody UpdateUserSubjectsRequest updateUserSubjectsRequest){
+    ResponseEntity<StringResponse> updateUserSubjects(@RequestBody UpdateUserSubjectsRequest updateUserSubjectsRequest){
         return ResponseEntity.ok(new StringResponse(userDetailedService.updateUserSubjects(updateUserSubjectsRequest)));
+    }
+
+    @PostMapping("/add-timeslot")
+    ResponseEntity<StringResponse> addUserTimeslot(@RequestBody UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest){
+        return ResponseEntity.ok(new StringResponse(userDetailedService.addUserTimeSlot(updateUserTimeSlotsRequest)));
+    }
+
+    @PostMapping("/delete-timeslot")
+    ResponseEntity<StringResponse> deleteUserTimeslot(@RequestBody UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest){
+        return ResponseEntity.ok(new StringResponse(userDetailedService.removeUserTimeSlot(updateUserTimeSlotsRequest)));
     }
 }

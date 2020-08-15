@@ -4,7 +4,9 @@ import com.mk.ukim.finki.winterstore.model.*;
 import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserTimeSlotsRequest;
 import com.mk.ukim.finki.winterstore.model.response.SubjectResponse;
+import com.mk.ukim.finki.winterstore.model.response.TimeSlotResponse;
 import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
@@ -12,7 +14,6 @@ import com.mk.ukim.finki.winterstore.repository.UserDetailedRepository;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
 import com.mk.ukim.finki.winterstore.service.UserDetailedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -94,7 +95,7 @@ public class UserDetailedServiceImpl implements UserDetailedService {
 
     @Override
     public List<UserDetailed> findAllByTimeSlot(TimeSlot timeSlot) {
-        return this.userDetailedRepository.findAllByFreeTimeSlots(timeSlot);
+        return this.userDetailedRepository.findAllByTimeSlots(timeSlot);
     }
 
     @Override
@@ -121,16 +122,28 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         UserDetailsResponse response = new UserDetailsResponse(
                 userDetailed.getId(), userDetailed.getFirstName(),
                 userDetailed.getLastName(), userDetailed.getPhoneNumber(),
-                userDetailed.getBiography(), userDetailed.getFreeTimeSlots(),
-                mapSubjectToSubjectResponse(userDetailed.getSubjects()), role.getName());
+                userDetailed.getBiography(),
+                mapTimeSlotToTimeSlotResposne(userDetailed.getTimeSlots()),
+                mapSubjectToSubjectResponse(userDetailed.getSubjects()),
+                role.getName());
         return response;
     }
 
     private List<SubjectResponse> mapSubjectToSubjectResponse(Set<Subject> subjects) {
-        List<SubjectResponse> set = new ArrayList<>();
+        List<SubjectResponse> list = new ArrayList<>();
         for (Subject s : subjects)
-            set.add(new SubjectResponse(s.getId(), s.getName()));
-        return set;
+            list.add(new SubjectResponse(s.getId(), s.getName()));
+        return list;
+    }
+
+    private List<TimeSlotResponse> mapTimeSlotToTimeSlotResposne(Set<TimeSlot> timeSlots) {
+        List<TimeSlotResponse> list = new ArrayList<>();
+        for (TimeSlot s : timeSlots) {
+            String startTime = s.getStartTime().toString();
+            String endTime = s.getEndTime().toString();
+            list.add(new TimeSlotResponse(startTime, endTime));
+        }
+        return list;
     }
 
     // todo chagnge implementation, this is obviously bad security
@@ -166,5 +179,13 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         return "Subjects updated!";
     }
 
+    @Override
+    public String removeUserTimeSlot(UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest) {
+        return null;
+    }
 
+    @Override
+    public String addUserTimeSlot(UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest) {
+        return null;
+    }
 }

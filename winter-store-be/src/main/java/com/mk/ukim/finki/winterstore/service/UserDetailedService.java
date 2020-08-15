@@ -5,6 +5,7 @@ import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserTimeSlotsRequest;
 import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface UserDetailedService {
     String changePassword(ChangePasswordRequest changePasswordRequest);
     String updateUserInformation(UpdateUserDetailsRequest updateUserDetailsRequest);
     String updateUserSubjects(UpdateUserSubjectsRequest updateUserSubjectsRequest);
+    String removeUserTimeSlot(UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest);
+    String addUserTimeSlot(UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest);
 }

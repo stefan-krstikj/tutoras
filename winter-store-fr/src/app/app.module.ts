@@ -15,6 +15,10 @@ import {AuthGuard} from './auth.guard';
 import { UserProfileComponent } from './profile-settings-page/user-profile/user-profile.component';
 import { ProfileSettingsMainComponent } from './profile-settings-page/profile-settings-main/profile-settings-main.component';
 import { ProfileSubjectsComponent } from './profile-settings-page/profile-subjects/profile-subjects.component';
+import { ProfileTimetableComponent } from './profile-settings-page/profile-timetable/profile-timetable.component';
+import {MatTableModule} from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -27,14 +31,18 @@ import { ProfileSubjectsComponent } from './profile-settings-page/profile-subjec
     HomeComponent,
     UserProfileComponent,
     ProfileSettingsMainComponent,
-    ProfileSubjectsComponent
+    ProfileSubjectsComponent,
+    ProfileTimetableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    BrowserAnimationsModule,
+    NgbModule
   ],
   // tslint:disable-next-line:max-line-length
   providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
