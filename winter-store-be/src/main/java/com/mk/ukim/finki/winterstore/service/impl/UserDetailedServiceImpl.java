@@ -3,6 +3,8 @@ package com.mk.ukim.finki.winterstore.service.impl;
 import com.mk.ukim.finki.winterstore.model.*;
 import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
+import com.mk.ukim.finki.winterstore.model.response.SubjectResponse;
 import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
@@ -14,9 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -118,11 +118,19 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         UserDetailed userDetailed = userDetailedRepository.findByUser(user);
         List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
 
-        return new UserDetailsResponse(
+        UserDetailsResponse response = new UserDetailsResponse(
                 userDetailed.getId(), userDetailed.getFirstName(),
                 userDetailed.getLastName(), userDetailed.getPhoneNumber(),
                 userDetailed.getBiography(), userDetailed.getFreeTimeSlots(),
-                userDetailed.getSubjects(), roles);
+                mapSubjectToSubjectResponse(userDetailed.getSubjects()), roles);
+        return response;
+    }
+
+    private List<SubjectResponse> mapSubjectToSubjectResponse(Set<Subject> subjects) {
+        List<SubjectResponse> set = new ArrayList<>();
+        for (Subject s : subjects)
+            set.add(new SubjectResponse(s.getId(), s.getName()));
+        return set;
     }
 
     // todo chagnge implementation, this is obviously bad security
@@ -143,6 +151,19 @@ public class UserDetailedServiceImpl implements UserDetailedService {
                 updateUserDetailsRequest.getPhoneNumber(),
                 updateUserDetailsRequest.getBiography());
         return "User successfully updated";
+    }
+
+    @Override
+    public String updateUserSubjects(UpdateUserSubjectsRequest updateUserSubjectsRequest) {
+        UserDetailed userDetailed = userDetailedRepository.findByUserUsername(updateUserSubjectsRequest.getUsername());
+        Set<Subject> newSubjects = new HashSet<>(subjectRepository.findAllByIdIn(
+                updateUserSubjectsRequest.getSubjects()
+                        .stream()
+                        .map(SubjectResponse::getId)
+                        .collect(Collectors.toList())));
+        userDetailed.setSubjects(newSubjects);
+        userDetailedRepository.save(userDetailed);
+        return "Subjects updated!";
     }
 
 

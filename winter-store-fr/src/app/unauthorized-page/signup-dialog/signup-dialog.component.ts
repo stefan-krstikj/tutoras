@@ -3,6 +3,7 @@ import {AuthService} from '../../services/AuthService';
 import {FormControl} from '@angular/forms';
 import {UserService} from '../../services/UserService';
 import {UserDetailed} from '../../model/user-detailed';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup-dialog',
@@ -15,7 +16,8 @@ export class SignupDialogComponent implements OnInit {
   email = '';
   password = '';
   repeatPassword = '';
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,6 +26,10 @@ export class SignupDialogComponent implements OnInit {
     console.log('name', this.name);
     console.log('email', this.email);
     console.log('password', this.password);
-    this.authService.signup(this.name, this.email, this.password);
+    this.authService.signup(this.name, this.email, this.password).subscribe(
+      respnose => {
+        this.router.navigate(['/login'])
+      }
+    );
   }
 }

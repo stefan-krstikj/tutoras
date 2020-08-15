@@ -1,10 +1,14 @@
 package com.mk.ukim.finki.winterstore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "user_details")
+@Table(name = "user_detailed")
 public class UserDetailed {
 
     @Id
@@ -12,7 +16,8 @@ public class UserDetailed {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne
+
+    @OneToOne(cascade = {CascadeType.ALL})
     private User user;
 
     @Column(name = "first_name")
@@ -29,21 +34,19 @@ public class UserDetailed {
 
     @Column(name = "time_slots")
     @ManyToMany
+    @JsonIgnore
     private List<TimeSlot> freeTimeSlots;
 
-    @Column(name = "subjects")
-    @ManyToMany
-    private List<TimeSlot> subjects;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_detailed_subjects",
+            joinColumns = {
+                    @JoinColumn(name = "user_detailed_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "subject_id", referencedColumnName = "id")})
+    @JsonIgnore
+    private Set<Subject> subjects = new HashSet<>();
 
     public UserDetailed() {
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Integer getId() {
@@ -52,6 +55,14 @@ public class UserDetailed {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getFirstName() {
@@ -94,11 +105,11 @@ public class UserDetailed {
         this.freeTimeSlots = freeTimeSlots;
     }
 
-    public List<TimeSlot> getSubjects() {
+    public Set<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<TimeSlot> subjects) {
+    public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
 }

@@ -3,6 +3,7 @@ package com.mk.ukim.finki.winterstore.controllers;
 import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.SignupRequest;
 import com.mk.ukim.finki.winterstore.model.response.LoginResponse;
+import com.mk.ukim.finki.winterstore.model.response.StringResponse;
 import com.mk.ukim.finki.winterstore.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest request) throws Exception {
+    public ResponseEntity<StringResponse> signup(@RequestBody SignupRequest request) throws Exception {
         this.authService.signupUser(request);
-        return ResponseEntity.ok( "Successfull signup");
+        return ResponseEntity.ok(new StringResponse("Successfull signup"));
     }
 
     @PostMapping("/login")

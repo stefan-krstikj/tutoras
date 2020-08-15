@@ -3,6 +3,7 @@ package com.mk.ukim.finki.winterstore.controllers;
 import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.ChangePasswordRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
+import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
 import com.mk.ukim.finki.winterstore.model.response.StringResponse;
 import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.service.UserDetailedService;
@@ -28,7 +29,8 @@ public class UsersController {
 
     @GetMapping("/{username}")
     ResponseEntity<UserDetailsResponse> findById(@PathVariable String username){
-        return ResponseEntity.ok(userDetailedService.findByUsername(username));
+        UserDetailsResponse response = userDetailedService.findByUsername(username);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/tutors")
@@ -69,5 +71,10 @@ public class UsersController {
     @PostMapping("/update-details")
     ResponseEntity<StringResponse> updateUserInformation(@RequestBody UpdateUserDetailsRequest updateUserDetailsRequest){
         return ResponseEntity.ok(new StringResponse(userDetailedService.updateUserInformation(updateUserDetailsRequest)));
+    }
+
+    @PostMapping("/update-subjects")
+    ResponseEntity<StringResponse> updateUserInformation(@RequestBody UpdateUserSubjectsRequest updateUserSubjectsRequest){
+        return ResponseEntity.ok(new StringResponse(userDetailedService.updateUserSubjects(updateUserSubjectsRequest)));
     }
 }

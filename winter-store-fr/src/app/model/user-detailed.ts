@@ -1,3 +1,5 @@
+import {Subject} from './subject';
+
 export interface UserDetailed {
   firstName: string;
   lastName: string;
@@ -5,6 +7,6 @@ export interface UserDetailed {
   biography: string;
   id: number;
   freeTimeSlots: [];
-  subjects: [];
+  subjects: Subject[];
   roles: [];
 }

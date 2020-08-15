@@ -1,10 +1,13 @@
 package com.mk.ukim.finki.winterstore.model.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mk.ukim.finki.winterstore.model.Subject;
 import com.mk.ukim.finki.winterstore.model.TimeSlot;
 import com.mk.ukim.finki.winterstore.model.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 public class UserDetailsResponse {
 
@@ -19,11 +22,11 @@ public class UserDetailsResponse {
     private String biography;
     private List<TimeSlot> freeTimeSlots;
 
-    private List<TimeSlot> subjects;
+    private List<SubjectResponse> subjects;
 
     private List<String> roles;
 
-    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlot> freeTimeSlots, List<TimeSlot> subjects, List<String> roles) {
+    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlot> freeTimeSlots, List<SubjectResponse> subjects, List<String> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -90,11 +93,11 @@ public class UserDetailsResponse {
         this.freeTimeSlots = freeTimeSlots;
     }
 
-    public List<TimeSlot> getSubjects() {
+    public List<SubjectResponse> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<TimeSlot> subjects) {
+    public void setSubjects(List<SubjectResponse> subjects) {
         this.subjects = subjects;
     }
 }

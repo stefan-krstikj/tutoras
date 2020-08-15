@@ -4,6 +4,7 @@ import {UserDetailed} from '../model/user-detailed';
 import {AuthService} from './AuthService';
 import {Params} from '@angular/router';
 import {Observable} from 'rxjs';
+import {Subject} from '../model/subject';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,12 @@ export class UserService {
       biography: userDetailed.biography,
       phoneNumber: userDetailed.phoneNumber
     }).subscribe(response => console.log('response', response));
+  }
+
+  updateSubjects(subjects: Subject[]): void{
+    this.http.post('http://localhost:8082/api/users/update-subjects', {
+      username: localStorage.getItem('username'),
+      subjects: subjects
+    }).subscribe(response => console.log('response', response))
   }
 }

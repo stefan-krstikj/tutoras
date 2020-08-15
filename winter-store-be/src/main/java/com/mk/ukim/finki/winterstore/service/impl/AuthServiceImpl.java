@@ -1,11 +1,13 @@
 package com.mk.ukim.finki.winterstore.service.impl;
 
 import com.mk.ukim.finki.winterstore.jwt.JwtTokenUtil;
+import com.mk.ukim.finki.winterstore.model.Subject;
 import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.requests.SignupRequest;
 import com.mk.ukim.finki.winterstore.model.User;
 import com.mk.ukim.finki.winterstore.model.response.LoginResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
+import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
 import com.mk.ukim.finki.winterstore.repository.UserDetailedRepository;
 import com.mk.ukim.finki.winterstore.repository.UserRepository;
 import com.mk.ukim.finki.winterstore.service.AuthService;
@@ -25,6 +27,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -38,6 +42,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     UserDetailedRepository userDetailedRepository;
+
+    @Autowired
+    SubjectRepository subjectRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -73,8 +80,10 @@ public class AuthServiceImpl implements AuthService {
         }catch (Exception e){
             logger.error(e.getLocalizedMessage());
         }
-
         User user = new User(signUpRequest.getUsername(), this.passwordEncoder.encode(signUpRequest.getPassword()));
+        UserDetailed userDetailed = new UserDetailed();
+        userDetailed.setUser(user);
+        this.userDetailedRepository.save(userDetailed);
 //        Role userRole = this.roleRepository.findByName("ROLE_USER");
 //        user.setRoles(Collections.singleton(userRole));
         return this.userService.registerUser(user);

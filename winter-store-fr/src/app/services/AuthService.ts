@@ -29,33 +29,32 @@ export class AuthService {
   }
 
 
-
-  signup(name: string, username: string, password: string): void {
-    this.http.post('http://localhost:8082/api/login/signup', {
-      username, password
-    }).subscribe((response) => console.log('Response', response));
-
+  signup(name: string, username: string, password: string): Observable<string> {
+    return this.http.post('http://localhost:8082/api/login/signup', {
+      name, username, password
+    }).pipe(
+      map((response: string) => response)
+    );
   }
 
   // @ts-ignore
-  login(username: string, password: string): Observable<string>{
+  login(username: string, password: string): Observable<string> {
     username = username.toLowerCase();
     return this.http.post('http://localhost:8082/api/login/login', {
       username, password
     })
       .pipe(
-      map( response => {
-        console.log('Login success');
-        localStorage.setItem(`username`, username);
-        // @ts-ignore
-        const tokenStr = 'Bearer ' + response.jwtToken;
-        localStorage.setItem(`token`, tokenStr);
-        return 'Successfull login!';
-      }));
-      // .subscribe(response => console.log('login response', response));
+        map(response => {
+          console.log('Login success');
+          localStorage.setItem(`username`, username);
+          // @ts-ignore
+          const tokenStr = 'Bearer ' + response.jwtToken;
+          localStorage.setItem(`token`, tokenStr);
+          return 'Successfull login!';
+        }));
   }
 
-  logout(): void{
+  logout(): void {
     localStorage.clear();
   }
 }

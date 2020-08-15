@@ -1,1 +1,34 @@
-<p>profile-subjects works!</p>
+<div class="container">
+  <div class="row">
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card card-signin">
+        <div class="card-body">
+          <h5 class="card-title">Select your subjects:</h5>
+          <div *ngFor="let subject of subjectsAvailable" class="float-left">
+            <button class="btn btn-outline-primary" (click)="addToSelectedSubjects(subject)">{{subject.name}} +</button>
+          </div>
+          <br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col">
+      <div class="card card-signin">
+        <div class="card-body">
+          <h4 class="card-title">Selected subjects:</h4>
+          <div *ngFor="let subject of userSubjects" class="float-left">
+            <button class="btn btn-primary" (click)="removeFromSelectedSubjects(subject)">{{subject.name}} -</button>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
