@@ -20,8 +20,8 @@ public interface UserDetailedRepository extends JpaRepository<UserDetailed, Long
     UserDetailed findByUserUsername(String username);
     List<UserDetailed> findAllBySubjectsContaining(Subject subject);
     List<UserDetailed> findAllByTimeSlots(TimeSlot timeSlot);
-
     UserDetailed findById(Integer id);
+
 
     @Transactional
     @Modifying

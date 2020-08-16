@@ -1,16 +1,16 @@
 package com.mk.ukim.finki.winterstore.model.requests;
 
-import com.mk.ukim.finki.winterstore.model.TimeSlot;
-
-import java.util.List;
+import com.mk.ukim.finki.winterstore.model.response.TimeslotResponse;
 
 public class UpdateUserTimeSlotsRequest {
     private String username;
-    private TimeSlotRequest timeSlot;
+    private Integer id;
+    private TimeslotResponse timeslot;
 
-    public UpdateUserTimeSlotsRequest(String username, TimeSlotRequest timeSlot) {
+    public UpdateUserTimeSlotsRequest(String username, Integer id, TimeslotResponse timeslot) {
         this.username = username;
-        this.timeSlot = timeSlot;
+        this.id = id;
+        this.timeslot = timeslot;
     }
 
     public String getUsername() {
@@ -21,11 +21,19 @@ public class UpdateUserTimeSlotsRequest {
         this.username = username;
     }
 
-    public TimeSlotRequest getTimeSlot() {
-        return timeSlot;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTimeSlot(TimeSlotRequest timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TimeslotResponse getTimeslot() {
+        return timeslot;
+    }
+
+    public void setTimeslot(TimeslotResponse timeslot) {
+        this.timeslot = timeslot;
     }
 }

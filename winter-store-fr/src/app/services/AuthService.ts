@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {SignUpRequest} from './SignUpRequest';
+import {SignUpRequest} from '../model/SignUpRequest';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';

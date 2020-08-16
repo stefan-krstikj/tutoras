@@ -109,6 +109,10 @@ public class UserDetailed {
         this.timeSlots = timeSlots;
     }
 
+    public void addTimeSlot(TimeSlot timeSlot){
+        this.timeSlots.add(timeSlot);
+    }
+
     public Set<Subject> getSubjects() {
         return subjects;
     }

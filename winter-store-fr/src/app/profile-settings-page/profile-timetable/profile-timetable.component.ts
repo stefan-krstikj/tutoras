@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {Timeslot} from '../../model/timeslot';
-interface PeriodicElement {
-  startTime: string;
-  position: number;
-  endTime: string;
-}
+import {UserService} from '../../services/UserService';
+import {TimeslotService} from '../../services/TimeslotService';
+import {AuthService} from '../../services/AuthService';
+import {MonthsEnum} from '../../model/enum/months-enum';
+import {UserTimeslot} from '../../model/user-timeslot';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-profile-timetable',
@@ -14,43 +16,61 @@ interface PeriodicElement {
 })
 export class ProfileTimetableComponent implements OnInit {
 
-  dataSource: PeriodicElement[] = [
-    {position: 1, startTime: '25 June 5:00pm', endTime: '25 June 6pm' },
-    {position: 2, startTime: '26 June 5:00pm', endTime: '26 June 6pm' },
-    {position: 3, startTime: '27 June 5:00pm', endTime: '27 June 6pm' },
-    {position: 4, startTime: '28 June 5:00pm', endTime: '28 June 6pm' },
-    {position: 5, startTime: '29 June 5:00pm', endTime: '29 June 6pm' },
-    {position: 6, startTime: '23 June 5:00pm', endTime: '23 June 6pm' },
-  ];
+  dataSource;
 
   displayedColumns: string[];
 
   model: NgbDateStruct;
-  date: {year: number, month: number, day: number};
+  date: { year: number, month: number, day: number };
   time = {hour: 0, minute: 0};
 
-  constructor(private calendar: NgbCalendar) { }
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+
+  constructor(private calendar: NgbCalendar,
+              private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.displayedColumns = ['position', 'startTime', 'endTime', 'action'];
+    this.getTimeslots();
   }
 
-  delete(periodicElement: PeriodicElement){
-    this.dataSource = this.dataSource.filter(it => it !== periodicElement);
-    this.sendUpdatedTimeSlots();
+  getTimeslots(): void {
+    this.userService.getUserDetailsForSignedInUser()
+      .subscribe(response => {
+        this.dataSource = new MatTableDataSource(response.freeTimeSlots);
+        this.dataSource.sort = this.sort
+        this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
+      });
   }
 
-  sendUpdatedTimeSlots(){
-      let timeSlot: Timeslot = {
-        year: this.date.year,
-        month: this.date.month,
-        day: this.date.day,
-        hour: this.time.hour,
-        minute: this.time.minute
-      }
+  deleteTimeslot(timeslot: UserTimeslot) {
+    console.log('deleting', timeslot)
+    this.dataSource = this.dataSource.filter(it => it !== timeslot);
+    this.userService.deleteTimeslot(timeslot);
   }
 
-  formatTimeslotToString(timeSlot: Timeslot): string{
-    return timeSlot.day + '.' + timeSlot.month + '.' + timeSlot.day + ' ' + timeSlot.hour + ':' + timeSlot.minute;
+  addNewTimeslot() {
+    console.log('this.date', this.date)
+    let timeSlot: Timeslot = {
+      year: this.model.year,
+      month: this.model.month,
+      day: this.model.day,
+      hour: this.time.hour,
+      minute: this.time.minute
+    };
+    this.userService.addTimeslot(timeSlot)
+      .subscribe(response => {
+        this.getTimeslots();
+      });
+  }
+
+  formatTimeslotToString(timeSlot: Timeslot): string {
+    let string = timeSlot.day < 10 ? '0' + timeSlot.day : '' + timeSlot.day
+    string+= ' ' + MonthsEnum[timeSlot.month] + ' ' + timeSlot.year + ' ';
+    timeSlot.hour < 10 ? string+='0'+timeSlot.hour+':' : string+=timeSlot.hour+':';
+    timeSlot.minute < 10 ? string+='0'+timeSlot.minute : string+=timeSlot.minute;
+    return string;
   }
 }

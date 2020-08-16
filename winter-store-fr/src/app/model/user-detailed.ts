@@ -1,4 +1,6 @@
 import {Subject} from './subject';
+import {Timeslot} from './timeslot';
+import {UserTimeslot} from './user-timeslot';
 
 export interface UserDetailed {
   firstName: string;
@@ -6,7 +8,7 @@ export interface UserDetailed {
   phoneNumber: string;
   biography: string;
   id: number;
-  freeTimeSlots: [];
+  freeTimeSlots: UserTimeslot[];
   subjects: Subject[];
   role: string;
 }

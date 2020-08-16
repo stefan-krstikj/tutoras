@@ -5,6 +5,8 @@ import {AuthService} from './AuthService';
 import {Params} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Subject} from '../model/subject';
+import {Timeslot} from '../model/timeslot';
+import {UserTimeslot} from '../model/user-timeslot';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +48,22 @@ export class UserService {
     this.http.post('http://localhost:8082/api/users/update-subjects', {
       username: localStorage.getItem('username'),
       subjects: subjects
+    }).subscribe(response => console.log('response', response))
+  }
+
+  addTimeslot(timeslot: Timeslot): Observable<string>{
+    return this.http.post<string>('http://localhost:8082/api/users/add-timeslot', {
+      username: localStorage.getItem('username'),
+      id: 0,
+      timeslot: timeslot
+    })
+  }
+
+  deleteTimeslot(timeslot: UserTimeslot){
+    this.http.post('http://localhost:8082/api/users/delete-timeslot', {
+      username: localStorage.getItem('username'),
+      id: timeslot.id,
+      timeslot: timeslot
     }).subscribe(response => console.log('response', response))
   }
 }

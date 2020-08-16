@@ -1,13 +1,6 @@
 package com.mk.ukim.finki.winterstore.model.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mk.ukim.finki.winterstore.model.Subject;
-import com.mk.ukim.finki.winterstore.model.TimeSlot;
-import com.mk.ukim.finki.winterstore.model.User;
-
-import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 public class UserDetailsResponse {
 
@@ -21,13 +14,13 @@ public class UserDetailsResponse {
 
     private String biography;
 
-    private List<TimeSlotResponse> freeTimeSlots;
+    private List<UserTimeslotResponse> freeTimeSlots;
 
     private List<SubjectResponse> subjects;
 
     private String role;
 
-    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<TimeSlotResponse> freeTimeSlots, List<SubjectResponse> subjects, String role) {
+    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<UserTimeslotResponse> freeTimeSlots, List<SubjectResponse> subjects, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -86,11 +79,11 @@ public class UserDetailsResponse {
         this.biography = biography;
     }
 
-    public List<TimeSlotResponse> getFreeTimeSlots() {
+    public List<UserTimeslotResponse> getFreeTimeSlots() {
         return freeTimeSlots;
     }
 
-    public void setFreeTimeSlots(List<TimeSlotResponse> freeTimeSlots) {
+    public void setFreeTimeSlots(List<UserTimeslotResponse> freeTimeSlots) {
         this.freeTimeSlots = freeTimeSlots;
     }
 

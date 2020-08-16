@@ -19,6 +19,7 @@ import { ProfileTimetableComponent } from './profile-settings-page/profile-timet
 import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatSortModule} from '@angular/material/sort';
 
 
 
@@ -42,7 +43,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     MatTableModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    MatSortModule
   ],
   // tslint:disable-next-line:max-line-length
   providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

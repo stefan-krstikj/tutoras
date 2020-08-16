@@ -6,7 +6,6 @@ import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserTimeSlotsRequest;
 import com.mk.ukim.finki.winterstore.model.response.SubjectResponse;
-import com.mk.ukim.finki.winterstore.model.response.TimeSlotResponse;
 import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
@@ -17,8 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.mk.ukim.finki.winterstore.service.MappingService.mapTimeSlotToTimeSlotResposne;
 
 @Service
 public class UserDetailedServiceImpl implements UserDetailedService {
@@ -136,16 +140,6 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         return list;
     }
 
-    private List<TimeSlotResponse> mapTimeSlotToTimeSlotResposne(Set<TimeSlot> timeSlots) {
-        List<TimeSlotResponse> list = new ArrayList<>();
-        for (TimeSlot s : timeSlots) {
-            String startTime = s.getStartTime().toString();
-            String endTime = s.getEndTime().toString();
-            list.add(new TimeSlotResponse(startTime, endTime));
-        }
-        return list;
-    }
-
     // todo chagnge implementation, this is obviously bad security
     @Override
     public String changePassword(ChangePasswordRequest changePasswordRequest) {
@@ -181,11 +175,33 @@ public class UserDetailedServiceImpl implements UserDetailedService {
 
     @Override
     public String removeUserTimeSlot(UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest) {
-        return null;
+        UserDetailed userDetailed = userDetailedRepository.findByUserUsername(updateUserTimeSlotsRequest.getUsername());
+        userDetailed.setTimeSlots(userDetailed.getTimeSlots()
+                .stream()
+                .filter(it -> !it.getId().equals(updateUserTimeSlotsRequest.getId()))
+                .collect(Collectors.toSet()));
+        userDetailedRepository.save(userDetailed);
+        return "Removed timeslot";
     }
 
     @Override
-    public String addUserTimeSlot(UpdateUserTimeSlotsRequest updateUserTimeSlotsRequest) {
-        return null;
+    public String addUserTimeSlot(UpdateUserTimeSlotsRequest request) {
+        UserDetailed userDetailed = userDetailedRepository.findByUserUsername(request.getUsername());
+
+        LocalDateTime startTime = LocalDateTime.of(
+                LocalDate.of(
+                        request.getTimeslot().getYear(),
+                        request.getTimeslot().getMonth(),
+                        request.getTimeslot().getDay()),
+                LocalTime.of(
+                        request.getTimeslot().getHour(),
+                        request.getTimeslot().getMinute()
+                ));
+        LocalDateTime endTime = startTime.plusHours(1);
+
+        userDetailed.addTimeSlot(new TimeSlot(startTime, endTime));
+        userDetailedRepository.save(userDetailed);
+
+        return "Added new timeslot";
     }
 }
