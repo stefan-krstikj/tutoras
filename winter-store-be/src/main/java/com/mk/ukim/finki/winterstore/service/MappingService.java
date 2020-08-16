@@ -39,13 +39,13 @@ public class MappingService {
         return list;
     }
 
-    public static UserDetailedResponse mapUserDetailedToUserDetailedResponse(UserDetailed userDetailed, Role role){
+    public static UserDetailedResponse mapUserDetailedToUserDetailedResponse(UserDetailed userDetailed){
         return new UserDetailedResponse(
                 userDetailed.getId(), userDetailed.getFirstName(),
                 userDetailed.getLastName(), userDetailed.getPhoneNumber(),
                 userDetailed.getBiography(),
                 mapTimeSlotToTimeSlotResposne(userDetailed.getTimeSlots()),
                 mapSubjectToSubjectResponse(userDetailed.getSubjects()),
-                role.getName(), userDetailed.getRating(), userDetailed.getPrice());
+                userDetailed.getUser().getRole().getName(), userDetailed.getRating(), userDetailed.getPrice());
     }
 }

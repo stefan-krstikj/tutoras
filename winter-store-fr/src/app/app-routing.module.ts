@@ -7,12 +7,14 @@ import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './auth.guard';
 import {UserProfileComponent} from './profile-settings-page/user-profile/user-profile.component';
 import {ProfileSettingsMainComponent} from './profile-settings-page/profile-settings-main/profile-settings-main.component';
+import {ProfileViewComponent} from './profile-view/profile-view.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginDialogComponent},
   {path: 'signup', component: SignupDialogComponent},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileSettingsMainComponent, canActivate: [AuthGuard]},
+  {path: 'profile/:id', component: ProfileViewComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'login'},
 ];
 

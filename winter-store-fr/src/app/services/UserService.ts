@@ -23,6 +23,10 @@ export class UserService {
     return this.http.get<UserDetailed>(`http://localhost:8082/api/users/${username}`);
   }
 
+  getUserDetailsForUserId(id: number): Observable<UserDetailed> {
+    return this.http.get<UserDetailed>(`http://localhost:8082/api/users/id/${id}`);
+  }
+
 
   changePassword(password: string): void {
     this.http.post('http://localhost:8082/api/users/change-password', {

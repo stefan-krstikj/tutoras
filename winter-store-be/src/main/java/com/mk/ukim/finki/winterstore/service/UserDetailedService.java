@@ -22,7 +22,7 @@ public interface UserDetailedService {
     List<UserDetailed> findAllBySubject(String subject);
     List<UserDetailed> findAllByNameContainingAndRole(String name, String role);
     List<UserDetailed> findAllByFirstNameAndLastName(String name);
-    UserDetailed findById(Integer id);
+    UserDetailedResponse findById(Integer id);
     UserDetailedResponse findByUsername(String username);
     String changePassword(ChangePasswordRequest changePasswordRequest);
     String updateUserInformation(UpdateUserDetailsRequest updateUserDetailsRequest);

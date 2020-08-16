@@ -93,10 +93,9 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         List<UserDetailed> usersWithRole = findAllByRole(role);
         Subject subject = subjectRepository.findById(subjectId);
         List<UserDetailed> usersWithSubject = findAllBySubject(subject.getName());
-        Role roleObj = roleRepository.findByName(role);
         return usersWithRole.stream()
                 .filter(o -> usersWithSubject.contains(o))
-                .map(o -> mapUserDetailedToUserDetailedResponse(o, roleObj))
+                .map(o -> mapUserDetailedToUserDetailedResponse(o))
                 .collect(Collectors.toList());
     }
 
@@ -116,16 +115,16 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     }
 
     @Override
-    public UserDetailed findById(Integer id) {
-        return userDetailedRepository.findById(id);
+    public UserDetailedResponse findById(Integer id) {
+        UserDetailed userDetailed = userDetailedRepository.findById(id);
+        return mapUserDetailedToUserDetailedResponse(userDetailed);
     }
 
     @Override
     public UserDetailedResponse findByUsername(String username) {
         User user = userRepository.findByUsername(username);
         UserDetailed userDetailed = userDetailedRepository.findByUser(user);
-        Role role = user.getRole();
-        return mapUserDetailedToUserDetailedResponse(userDetailed, role);
+        return mapUserDetailedToUserDetailedResponse(userDetailed);
     }
 
     // todo chagnge implementation, this is obviously bad security

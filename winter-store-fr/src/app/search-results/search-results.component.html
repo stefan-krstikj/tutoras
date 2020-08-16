@@ -1,8 +1,8 @@
 <div class="container-fluid">
-  <div class="row justify-content-center">
-      <div class="col-auto mb-3 d-flex"  *ngFor="let tutor of tutorsMatchingSearch">
-        <div class="card card-signin" style="width: 24rem;">
-          <img src="assets/thispersondoesnotexist/image-{{generateRandomImage()}}" class="card-img-top" alt="...">
+  <div class="row justify-content-between">
+      <div class="col-auto mb-3 ml-5 mr-5 d-flex"  *ngFor="let tutor of tutorsMatchingSearch">
+        <div class="card card-signin" style="width: 24rem;" [routerLink]="['/profile', tutor.id]">
+          <img src="assets/thispersondoesnotexist/image-{{tutor.id}}.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title mb-3">{{tutor.firstName}} {{tutor.lastName}}</h5>
             <div class="d-flex justify-content-between align-items-center mb-2" >

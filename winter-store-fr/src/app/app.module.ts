@@ -25,6 +25,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -40,7 +42,9 @@ import { SearchDialogComponent } from './search-dialog/search-dialog.component';
     ProfileSubjectsComponent,
     ProfileTimetableComponent,
     SearchResultsComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    ProfileViewComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
