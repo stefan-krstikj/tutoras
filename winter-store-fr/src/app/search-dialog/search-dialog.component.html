@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row icon-row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto" style="text-align: center">
+        <mat-icon class="mat-icon" inline=true>square_foot</mat-icon>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-md-6 col-lg-9 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title mb-1">Find a Tutor for a subject</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+                <mat-form-field class="w-100">
+                  <mat-label>Subjects</mat-label>
+                  <mat-select [(ngModel)]="selectedSubjects" name="selectedSubjects" multiple>
+                    <input matInput placeholder="Search" class="form-control p-4" (keyup)="onKey($event.target.value)">
+                    <mat-option *ngFor="let subject of searchResultSubjects"
+                                [value]="subject">{{subject.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button class="btn btn-primary float-right mb-0" type="submit" (click)="searchTutors()">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-search-results *ngIf="searched" [subjects]="selectedSubjects"></app-search-results>

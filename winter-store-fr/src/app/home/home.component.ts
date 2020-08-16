@@ -11,34 +11,9 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  allSubjects: Subject[];
-  searchResultSubjects: Subject[];
-  selectedSubjects: Subject[] = [];
-
-  constructor(private authService: AuthService,
-              private userService: UserService,
-              private subjectsService: SubjectsService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.subjectsService.getAllSubjects()
-      .subscribe(response => {
-        this.searchResultSubjects = response;
-        this.allSubjects = response;
-      });
-  }
-
-  onKey(value) {
-    this.searchResultSubjects = this.search(value);
-  }
-
-  search(value: string) {
-    let filter = value.toLowerCase();
-    return this.allSubjects.filter(subject => subject.name.toLowerCase().startsWith(filter));
-  }
-
-  searchTutors(){
-    console.log('searchResultSubjects', this.searchResultSubjects)
-    console.log('selectedSubjects', this.selectedSubjects)
   }
 }

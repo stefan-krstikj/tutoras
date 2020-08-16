@@ -11,4 +11,6 @@ export interface UserDetailed {
   freeTimeSlots: UserTimeslot[];
   subjects: Subject[];
   role: string;
+  price: number;
+  rating: number;
 }

@@ -66,4 +66,8 @@ export class UserService {
       timeslot: timeslot
     }).subscribe(response => console.log('response', response))
   }
+
+  findTutorsForSubject(subject: Subject): Observable<UserDetailed[]>{
+    return this.http.get<UserDetailed[]>(`http://localhost:8082/api/users/tutors/subject/${subject.id}`);
+  }
 }

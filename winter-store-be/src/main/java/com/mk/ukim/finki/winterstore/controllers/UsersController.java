@@ -44,14 +44,15 @@ public class UsersController {
         return ResponseEntity.ok(userDetailedService.findAllByRole("student"));
     }
 
-    @GetMapping("/tutors/subject/{subject}")
-    ResponseEntity<List<UserDetailed>> findAllTutorsBySubject(@RequestParam String subject){
-        return ResponseEntity.ok(userDetailedService.findAllBySubjectsContainingAndRole(subject, "tutor"));
+    @GetMapping("/tutors/subject/{subjectId}")
+    ResponseEntity<List<UserDetailsResponse>> findAllTutorsBySubject(@PathVariable Integer subjectId){
+        List<UserDetailsResponse> response = userDetailedService.findAllBySubjectsContainingAndRole(subjectId, "tutor");
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/students/subject/{subject}")
-    ResponseEntity<List<UserDetailed>> findAllStudentsBySubject(@RequestParam String subject){
-        return ResponseEntity.ok(userDetailedService.findAllBySubjectsContainingAndRole(subject, "student"));
+    @GetMapping("/students/subject/{subjectId}")
+    ResponseEntity<List<UserDetailsResponse>> findAllStudentsBySubject(@PathVariable Integer subjectId){
+        return ResponseEntity.ok(userDetailedService.findAllBySubjectsContainingAndRole(subjectId, "student"));
     }
 
     @GetMapping("/tutors/name/{name}")

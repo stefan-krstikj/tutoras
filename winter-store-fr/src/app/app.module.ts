@@ -23,6 +23,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 
 
 
@@ -36,7 +38,9 @@ import {MatInputModule} from '@angular/material/input';
     UserProfileComponent,
     ProfileSettingsMainComponent,
     ProfileSubjectsComponent,
-    ProfileTimetableComponent
+    ProfileTimetableComponent,
+    SearchResultsComponent,
+    SearchDialogComponent
   ],
   imports: [
     BrowserModule,

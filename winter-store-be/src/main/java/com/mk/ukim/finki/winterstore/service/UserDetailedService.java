@@ -16,7 +16,7 @@ public interface UserDetailedService {
     Optional<UserDetailed> getUserDetails(UserDetailed userDetails);
     List<UserDetailed> findAllByFirstName(String firstName);
     List<UserDetailed> findAllByLastName(String lastName);
-    List<UserDetailed> findAllBySubjectsContainingAndRole(String subject, String role);
+    List<UserDetailsResponse> findAllBySubjectsContainingAndRole(Integer subjectId, String role);
     List<UserDetailed> findAllByTimeSlot(TimeSlot timeSlot);
     List<UserDetailed> findAllByRole(String role);
     List<UserDetailed> findAllBySubject(String subject);

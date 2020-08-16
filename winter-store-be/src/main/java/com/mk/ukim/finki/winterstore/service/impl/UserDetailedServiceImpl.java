@@ -22,7 +22,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.mk.ukim.finki.winterstore.service.MappingService.mapTimeSlotToTimeSlotResposne;
+import static com.mk.ukim.finki.winterstore.service.MappingService.*;
 
 @Service
 public class UserDetailedServiceImpl implements UserDetailedService {
@@ -89,11 +89,14 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     }
 
     @Override
-    public List<UserDetailed> findAllBySubjectsContainingAndRole(String subject, String role) {
+    public List<UserDetailsResponse> findAllBySubjectsContainingAndRole(Integer subjectId, String role) {
         List<UserDetailed> usersWithRole = findAllByRole(role);
-        List<UserDetailed> usersWithSubject = findAllBySubject(subject);
+        Subject subject = subjectRepository.findById(subjectId);
+        List<UserDetailed> usersWithSubject = findAllBySubject(subject.getName());
+        Role roleObj = roleRepository.findByName(role);
         return usersWithRole.stream()
-                .filter(usersWithSubject::contains)
+                .filter(o -> usersWithSubject.contains(o))
+                .map(o -> mapUserDetailedToUserDetailedResponse(o,roleObj))
                 .collect(Collectors.toList());
     }
 
@@ -105,7 +108,7 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     @Override
     public List<UserDetailed> findAllByRole(String role) {
         Role roleObject = roleRepository.findByName(role);
-        List<User> usersWithRole = userRepository.findAllByRoleContaining(roleObject);
+        List<User> usersWithRole = userRepository.findAllByRole(roleObject);
         List<UserDetailed> userDetailsWithRole = new ArrayList<>();
         for (User u : usersWithRole)
             userDetailsWithRole.add(userDetailedRepository.findByUser(u));
@@ -122,22 +125,7 @@ public class UserDetailedServiceImpl implements UserDetailedService {
         User user = userRepository.findByUsername(username);
         UserDetailed userDetailed = userDetailedRepository.findByUser(user);
         Role role = user.getRole();
-
-        UserDetailsResponse response = new UserDetailsResponse(
-                userDetailed.getId(), userDetailed.getFirstName(),
-                userDetailed.getLastName(), userDetailed.getPhoneNumber(),
-                userDetailed.getBiography(),
-                mapTimeSlotToTimeSlotResposne(userDetailed.getTimeSlots()),
-                mapSubjectToSubjectResponse(userDetailed.getSubjects()),
-                role.getName());
-        return response;
-    }
-
-    private List<SubjectResponse> mapSubjectToSubjectResponse(Set<Subject> subjects) {
-        List<SubjectResponse> list = new ArrayList<>();
-        for (Subject s : subjects)
-            list.add(new SubjectResponse(s.getId(), s.getName()));
-        return list;
+        return mapUserDetailedToUserDetailedResponse(userDetailed, role);
     }
 
     // todo chagnge implementation, this is obviously bad security

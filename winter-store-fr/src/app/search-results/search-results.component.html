@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="card-deck">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col mb-4 d-flex align-items-stretch" *ngFor="let tutor of tutorsMatchingSearch">
+        <div class="card " style="width: 52rem;">
+          <img src="https://thispersondoesnotexist.com/image" class="card-img-top" alt="...">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title">{{tutor.firstName}} {{tutor.lastName}}</h5>
+              <small class="text-muted">$ {{tutor.price}}</small>
+            </div>
+            <ngb-rating [rate]="tutor.rating" class="card-subtitle"></ngb-rating>
+            <p class="card-text">{{tutor.biography}}</p>
+            <div *ngFor="let subject of tutor.subjects" class="float-left">
+              <div *ngIf="tutorSubjectMatch(subject); then markMatchBlock else markNonMatchBlock"></div>
+              <ng-template #markMatchBlock>
+                <button class="btn btn-primary m-1">{{subject.name}}</button>
+              </ng-template>
+              <ng-template #markNonMatchBlock>
+                <button class="btn btn-outline-primary m-1" [disabled]="true">{{subject.name}}</button>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

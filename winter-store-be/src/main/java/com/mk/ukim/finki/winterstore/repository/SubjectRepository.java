@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
     Subject findByName(String subjectName);
+    Subject findById(Integer id);
     List<Subject> findAllByIdIn(List<Integer> ids);
 }
