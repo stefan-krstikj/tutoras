@@ -12,6 +12,8 @@ export class UserProfileComponent implements OnInit {
   email = localStorage.getItem('username');
   password = '';
   repeatPassword = '';
+  radioSelected = 'student';
+
   showPasswordNotMatch = false;
   constructor(private userService: UserService) { }
 
@@ -20,6 +22,7 @@ export class UserProfileComponent implements OnInit {
       response => {
         console.log('response', response);
         this.userDetailed = response;
+        this.radioSelected = response.role;
       }
     );
   }
@@ -29,10 +32,12 @@ export class UserProfileComponent implements OnInit {
       this.showPasswordNotMatch = true;
       return;
     }
+    this.showPasswordNotMatch = false;
     this.userService.changePassword(this.password);
   }
 
   update(): void{
+    this.userDetailed.role = this.radioSelected;
     this.userService.updateDetails(this.userDetailed);
   }
 

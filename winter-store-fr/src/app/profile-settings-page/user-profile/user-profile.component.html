@@ -5,7 +5,7 @@
         <div class="card-body">
           <h5 class="card-title text-center mb-1">{{userDetailed.firstName}} {{userDetailed.lastName}}</h5>
           <h6 class="card-title text-center text-info font-weight-bold">{{capitalizeFirstLetter(userDetailed.role)}}</h6>
-          <form class="form-signin" (ngSubmit)="update()">
+          <form class="form-signin">
             <div class="form-label-group">
               <input type="text" id="firstName" class="form-control" placeholder="First Name" name="firstName"
                      [(ngModel)]="userDetailed.firstName">
@@ -27,15 +27,15 @@
                         [(ngModel)]="userDetailed.biography"></textarea>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">
-                Default radio
+              <input class="form-check-input" type="radio" name="role-choice" id="studentRadio" value="student" [(ngModel)]="radioSelected">
+              <label class="form-check-label" for="studentRadio">
+                Student
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-              <label class="form-check-label" for="exampleRadios2">
-                Second default radio
+              <input class="form-check-input" type="radio" name="role-choice" id="tutorRadio" value="tutor" [(ngModel)]="radioSelected">
+              <label class="form-check-label" for="tutorRadio">
+                Tutor
               </label>
             </div>
             <br>
@@ -47,13 +47,19 @@
             <div class="form-label-group">
               <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat Password"
                      name="repeatPassword" [(ngModel)]="repeatPassword">
+              <small class="form-text text-muted">
+                Your password must be at least 6 characters long
+              </small>
+              <small *ngIf="showPasswordNotMatch" class="form-text text-danger">
+                Passwords do not match
+              </small>
             </div>
             <div>
               <button class="btn-danger btn-sm float-right mb-3" (click)="changePassword()">Change password</button>
             </div>
             <br><br>
             <hr>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Update
+            <button (click)="update()" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Update
             </button>
           </form>
         </div>
