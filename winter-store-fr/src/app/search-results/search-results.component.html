@@ -1,11 +1,12 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
       <div class="col-auto mb-3 d-flex"  *ngFor="let tutor of tutorsMatchingSearch">
-        <div class="card card-signin" style="width: 22rem;">
+        <div class="card card-signin" style="width: 24rem;">
           <img src="assets/thispersondoesnotexist/image-{{generateRandomImage()}}" class="card-img-top" alt="...">
           <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <h5 class="card-title">{{tutor.firstName}} {{tutor.lastName}}</h5>
+            <h5 class="card-title mb-3">{{tutor.firstName}} {{tutor.lastName}}</h5>
+            <div class="d-flex justify-content-between align-items-center mb-2" >
+              <h6 class="card-subtitle text-muted">{{tutor.phoneNumber}}</h6>
               <small class="text-muted">${{tutor.price}}</small>
             </div>
             <ngb-rating [rate]="tutor.rating" class="card-subtitle"></ngb-rating>
