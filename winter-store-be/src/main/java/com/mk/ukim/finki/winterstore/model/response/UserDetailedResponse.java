@@ -2,7 +2,7 @@ package com.mk.ukim.finki.winterstore.model.response;
 
 import java.util.List;
 
-public class UserDetailsResponse {
+public class UserDetailedResponse {
 
     private Integer id;
 
@@ -20,7 +20,14 @@ public class UserDetailsResponse {
 
     private String role;
 
-    public UserDetailsResponse(Integer id, String firstName, String lastName, String phoneNumber, String biography, List<UserTimeslotResponse> freeTimeSlots, List<SubjectResponse> subjects, String role) {
+    private Integer rating;
+
+    private Integer price;
+
+    public UserDetailedResponse(Integer id, String firstName, String lastName,
+                                String phoneNumber, String biography, List<UserTimeslotResponse> freeTimeSlots,
+                                List<SubjectResponse> subjects, String role,
+                                Integer rating, Integer price) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,6 +36,24 @@ public class UserDetailsResponse {
         this.freeTimeSlots = freeTimeSlots;
         this.subjects = subjects;
         this.role = role;
+        this.rating = rating;
+        this.price = price;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public String getRole() {

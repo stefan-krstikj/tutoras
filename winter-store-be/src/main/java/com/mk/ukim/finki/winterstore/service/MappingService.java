@@ -6,7 +6,7 @@ import com.mk.ukim.finki.winterstore.model.TimeSlot;
 import com.mk.ukim.finki.winterstore.model.UserDetailed;
 import com.mk.ukim.finki.winterstore.model.response.SubjectResponse;
 import com.mk.ukim.finki.winterstore.model.response.TimeslotResponse;
-import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
+import com.mk.ukim.finki.winterstore.model.response.UserDetailedResponse;
 import com.mk.ukim.finki.winterstore.model.response.UserTimeslotResponse;
 
 import java.util.ArrayList;
@@ -39,13 +39,13 @@ public class MappingService {
         return list;
     }
 
-    public static UserDetailsResponse mapUserDetailedToUserDetailedResponse(UserDetailed userDetailed, Role role){
-        return new UserDetailsResponse(
+    public static UserDetailedResponse mapUserDetailedToUserDetailedResponse(UserDetailed userDetailed, Role role){
+        return new UserDetailedResponse(
                 userDetailed.getId(), userDetailed.getFirstName(),
                 userDetailed.getLastName(), userDetailed.getPhoneNumber(),
                 userDetailed.getBiography(),
                 mapTimeSlotToTimeSlotResposne(userDetailed.getTimeSlots()),
                 mapSubjectToSubjectResponse(userDetailed.getSubjects()),
-                role.getName());
+                role.getName(), userDetailed.getRating(), userDetailed.getPrice());
     }
 }

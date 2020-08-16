@@ -6,13 +6,33 @@ public class UpdateUserDetailsRequest {
     private String biography;
     private String phoneNumber;
     private Integer id;
+    private Integer price;
+    private String role;
 
-    public UpdateUserDetailsRequest(String firstName, String lastName, String biography, String phoneNumber, Integer id) {
+    public UpdateUserDetailsRequest(String firstName, String lastName, String biography,
+                                    String phoneNumber, Integer id, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.biography = biography;
         this.phoneNumber = phoneNumber;
         this.id = id;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public Integer getId() {

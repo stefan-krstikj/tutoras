@@ -26,8 +26,8 @@ export class SearchResultsComponent implements OnInit {
       it => {
         this.userService.findTutorsForSubject(it)
           .subscribe((response: UserDetailed[]) => {
+            console.log('response', response)
             response.map(it => {
-
               return this.tutorsMatchingSearch.findIndex(item => item.id ===it.id) === -1 ? this.tutorsMatchingSearch.push(it) : null;
             });
           });
@@ -39,4 +39,7 @@ export class SearchResultsComponent implements OnInit {
     return this.subjects.findIndex(it => it.id === subject.id) >= 0;
   }
 
+  generateRandomImage(): string{
+    return Math.floor(Math.random() * 10) + 1 + '.jpeg';
+  }
 }

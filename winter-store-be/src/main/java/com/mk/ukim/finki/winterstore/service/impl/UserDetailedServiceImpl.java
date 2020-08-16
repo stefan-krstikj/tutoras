@@ -6,7 +6,7 @@ import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserTimeSlotsRequest;
 import com.mk.ukim.finki.winterstore.model.response.SubjectResponse;
-import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
+import com.mk.ukim.finki.winterstore.model.response.UserDetailedResponse;
 import com.mk.ukim.finki.winterstore.repository.RoleRepository;
 import com.mk.ukim.finki.winterstore.repository.SubjectRepository;
 import com.mk.ukim.finki.winterstore.repository.UserDetailedRepository;
@@ -89,14 +89,14 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     }
 
     @Override
-    public List<UserDetailsResponse> findAllBySubjectsContainingAndRole(Integer subjectId, String role) {
+    public List<UserDetailedResponse> findAllBySubjectsContainingAndRole(Integer subjectId, String role) {
         List<UserDetailed> usersWithRole = findAllByRole(role);
         Subject subject = subjectRepository.findById(subjectId);
         List<UserDetailed> usersWithSubject = findAllBySubject(subject.getName());
         Role roleObj = roleRepository.findByName(role);
         return usersWithRole.stream()
                 .filter(o -> usersWithSubject.contains(o))
-                .map(o -> mapUserDetailedToUserDetailedResponse(o,roleObj))
+                .map(o -> mapUserDetailedToUserDetailedResponse(o, roleObj))
                 .collect(Collectors.toList());
     }
 
@@ -121,7 +121,7 @@ public class UserDetailedServiceImpl implements UserDetailedService {
     }
 
     @Override
-    public UserDetailsResponse findByUsername(String username) {
+    public UserDetailedResponse findByUsername(String username) {
         User user = userRepository.findByUsername(username);
         UserDetailed userDetailed = userDetailedRepository.findByUser(user);
         Role role = user.getRole();
@@ -144,7 +144,16 @@ public class UserDetailedServiceImpl implements UserDetailedService {
                 updateUserDetailsRequest.getFirstName(),
                 updateUserDetailsRequest.getLastName(),
                 updateUserDetailsRequest.getPhoneNumber(),
-                updateUserDetailsRequest.getBiography());
+                updateUserDetailsRequest.getBiography(),
+                updateUserDetailsRequest.getPrice());
+        UserDetailed userDetailed = userDetailedRepository.findById(updateUserDetailsRequest.getId());
+        User user = userDetailed.getUser();
+        if(!user.getRole().getName().equals(updateUserDetailsRequest.getRole())){
+            Role role = roleRepository.findByName(updateUserDetailsRequest.getRole());
+            user.setRole(role);
+            userRepository.save(user);
+        }
+
         return "User successfully updated";
     }
 

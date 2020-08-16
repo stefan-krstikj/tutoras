@@ -26,8 +26,8 @@ public interface UserDetailedRepository extends JpaRepository<UserDetailed, Long
     @Transactional
     @Modifying
     @Query("update UserDetailed ud set ud.firstName = :firstName, ud.lastName=:lastName, ud.phoneNumber = :phoneNumber" +
-            ", ud.biography=:bio where ud.id = :id")
-    int updateUserDetails(Integer id, String firstName, String lastName, String phoneNumber, String bio);
+            ", ud.biography=:bio, ud.price=:price where ud.id = :id")
+    int updateUserDetails(Integer id, String firstName, String lastName, String phoneNumber, String bio, Integer price);
 
     @Transactional
     @Modifying

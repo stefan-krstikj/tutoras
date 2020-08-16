@@ -26,6 +26,7 @@
               <textarea type="text" id="biography" class="form-control" placeholder="Biography" name="biography"
                         [(ngModel)]="userDetailed.biography"></textarea>
             </div>
+            <label for="studentRadio">Account type</label>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="role-choice" id="studentRadio" value="student" [(ngModel)]="radioSelected">
               <label class="form-check-label" for="studentRadio">
@@ -37,6 +38,12 @@
               <label class="form-check-label" for="tutorRadio">
                 Tutor
               </label>
+            </div>
+            <br>
+            <div class="form-group" *ngIf="radioSelected === 'tutor'">
+              <label for="price">Price for a lesson</label>
+              <input type="number" class="form-control" id="price" placeholder="0" name="price"
+                     [(ngModel)]="userDetailed.price">
             </div>
             <br>
             <label for="password">Change password</label>

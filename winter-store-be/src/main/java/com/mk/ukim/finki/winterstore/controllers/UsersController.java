@@ -6,7 +6,7 @@ import com.mk.ukim.finki.winterstore.model.requests.UpdateUserDetailsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserSubjectsRequest;
 import com.mk.ukim.finki.winterstore.model.requests.UpdateUserTimeSlotsRequest;
 import com.mk.ukim.finki.winterstore.model.response.StringResponse;
-import com.mk.ukim.finki.winterstore.model.response.UserDetailsResponse;
+import com.mk.ukim.finki.winterstore.model.response.UserDetailedResponse;
 import com.mk.ukim.finki.winterstore.service.UserDetailedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +29,8 @@ public class UsersController {
     }
 
     @GetMapping("/{username}")
-    ResponseEntity<UserDetailsResponse> findById(@PathVariable String username){
-        UserDetailsResponse response = userDetailedService.findByUsername(username);
+    ResponseEntity<UserDetailedResponse> findById(@PathVariable String username){
+        UserDetailedResponse response = userDetailedService.findByUsername(username);
         return ResponseEntity.ok(response);
     }
 
@@ -45,13 +45,13 @@ public class UsersController {
     }
 
     @GetMapping("/tutors/subject/{subjectId}")
-    ResponseEntity<List<UserDetailsResponse>> findAllTutorsBySubject(@PathVariable Integer subjectId){
-        List<UserDetailsResponse> response = userDetailedService.findAllBySubjectsContainingAndRole(subjectId, "tutor");
+    ResponseEntity<List<UserDetailedResponse>> findAllTutorsBySubject(@PathVariable Integer subjectId){
+        List<UserDetailedResponse> response = userDetailedService.findAllBySubjectsContainingAndRole(subjectId, "tutor");
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/students/subject/{subjectId}")
-    ResponseEntity<List<UserDetailsResponse>> findAllStudentsBySubject(@PathVariable Integer subjectId){
+    ResponseEntity<List<UserDetailedResponse>> findAllStudentsBySubject(@PathVariable Integer subjectId){
         return ResponseEntity.ok(userDetailedService.findAllBySubjectsContainingAndRole(subjectId, "student"));
     }
 

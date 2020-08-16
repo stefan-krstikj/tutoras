@@ -50,7 +50,27 @@ public class UserDetailed {
     @JsonIgnore
     private Set<Subject> subjects = new HashSet<>();
 
+    private Integer rating = 0;
+
+    private Integer price = 0;
+
     public UserDetailed() {
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public Integer getId() {

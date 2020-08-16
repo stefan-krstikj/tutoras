@@ -40,7 +40,9 @@ export class UserService {
       lastName: userDetailed.lastName,
       id: userDetailed.id,
       biography: userDetailed.biography,
-      phoneNumber: userDetailed.phoneNumber
+      phoneNumber: userDetailed.phoneNumber,
+      role: userDetailed.role,
+      price: userDetailed.price
     }).subscribe(response => console.log('response', response));
   }
 
