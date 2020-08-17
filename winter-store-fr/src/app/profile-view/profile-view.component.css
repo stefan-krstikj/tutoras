@@ -42,7 +42,12 @@
   background-color: transparent !important;
 }
 
+.disabled-cursor{
+  cursor: not-allowed;
+}
+
 table tr:last-child td
 {
   border-bottom: 0 solid
 }
+

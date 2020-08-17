@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     TimeSlot findByStartTime(LocalDateTime startTime);
-
+    TimeSlot findById(Integer id);
 }

@@ -17,6 +17,9 @@ public class MappingService {
     public static List<UserTimeslotResponse> mapTimeSlotToTimeSlotResposne(Set<TimeSlot> timeSlots) {
         List<UserTimeslotResponse> list = new ArrayList<>();
         for (TimeSlot s : timeSlots) {
+            // we are not returning unavailable timeslots!
+            if(!s.getAvailable())
+                continue;
             TimeslotResponse startTime = new TimeslotResponse(s.getStartTime().getYear(),
                     s.getStartTime().getMonthValue(),
                     s.getStartTime().getDayOfMonth(),

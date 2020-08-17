@@ -8,6 +8,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import {UserTimeslot} from '../model/user-timeslot';
+import {Subject} from '../model/subject';
+import {CartService} from '../services/CartService';
 
 @Component({
   selector: 'app-profile-view',
@@ -18,6 +20,7 @@ export class ProfileViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
+              private cartService: CartService,
               config: NgbRatingConfig) {
     config.max = 5;
     config.readonly = true;
@@ -28,6 +31,12 @@ export class ProfileViewComponent implements OnInit {
 
   dataSource;
   displayedColumns: string[];
+  disableTable = false;
+
+  timeslotSelected: UserTimeslot;
+  subjectSelected: Subject;
+
+  displayMissingSubjectSelection = false;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -47,6 +56,7 @@ export class ProfileViewComponent implements OnInit {
         this.dataSource = new MatTableDataSource(response.freeTimeSlots);
         this.dataSource.sort = this.sort
         this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
+        console.log('userDetailed', response)
         return this.userDetailed = response;
       })
   }
@@ -59,7 +69,20 @@ export class ProfileViewComponent implements OnInit {
     return string;
   }
 
-  addToCart(timeslot: UserTimeslot){
+  selectTimeslot(userTimeslot: UserTimeslot){
+    if(this.disableTable)
+      return;
+    console.log("received", userTimeslot);
+    this.disableTable = true;
+    this.timeslotSelected = userTimeslot;
+  }
 
+  addToCart(){
+    if(!this.subjectSelected){
+      this.displayMissingSubjectSelection = true;
+      return;
+    }
+
+    this.cartService.addToCart(this.subjectSelected, this.timeslotSelected, this.userDetailed);
   }
 }

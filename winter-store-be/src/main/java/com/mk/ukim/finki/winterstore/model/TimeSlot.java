@@ -18,12 +18,23 @@ public class TimeSlot {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    private Boolean isAvailable;
+
     public TimeSlot() {
     }
 
     public TimeSlot(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.isAvailable = true;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 
     public Integer getId() {
