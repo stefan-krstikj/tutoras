@@ -17,7 +17,6 @@ import {MatTableDataSource} from '@angular/material/table';
 export class ProfileTimetableComponent implements OnInit {
 
   dataSource;
-
   displayedColumns: string[];
 
   model: NgbDateStruct;

@@ -1,0 +1,48 @@
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 1.5rem 1.5rem 0rem;
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  padding: 0.55rem;
+  transition: all 0.2s;
+}
+
+.card-img-top {
+  width: 100%;
+  object-fit: cover;
+}
+
+.container {
+  margin: 0rem 12rem;
+}
+
+.mat-icon {
+  transform: scale(1.75);
+  margin-left: 1rem;
+}
+
+
+.mat-table {
+  background-color: transparent !important;
+}
+
+table tr:last-child td
+{
+  border-bottom: 0 solid
+}

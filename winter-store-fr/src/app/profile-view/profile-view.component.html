@@ -1,6 +1,65 @@
 <app-navbar></app-navbar>
 <div class="container">
   <div class="row">
-    {{userDetailed.firstName}} {{userDetailed.lastName}}
+    <div class="col-sm-4">
+      <div class="card card-signin" *ngIf="userDetailed">
+        <img src="assets/thispersondoesnotexist/image-{{userDetailed.id}}.jpeg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title mb-3">{{userDetailed.firstName}} {{userDetailed.lastName}}</h5>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="card-subtitle text-muted">{{userDetailed.phoneNumber}}</h6>
+            <small class="text-muted">${{userDetailed.price}}</small>
+          </div>
+          <ngb-rating [rate]="userDetailed.rating" class="card-subtitle"></ngb-rating>
+          <p class="card-text">{{userDetailed.biography}}</p>
+          <div *ngFor="let subject of userDetailed.subjects" class="float-left">
+            <!--              <button class="btn btn-primary m-1">{{subject.name}}</button>-->
+            <button class="btn btn-outline-primary m-1" [disabled]="true">{{subject.name}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8 ">
+<!--      <div class="card card-signin">-->
+        <div class="card-body">
+          <h5 class="card-title mb-3">Book a timeslot</h5>
+<!--          <div class="card">-->
+            <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc" class="card-signin w-100">
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="id">No.</th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="startTime" >
+                <th mat-header-cell *matHeaderCellDef >Start Time</th>
+                <td mat-cell *matCellDef="let element"> {{formatTimeslotToString(element.startTime)}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="endTime">
+                <th mat-header-cell *matHeaderCellDef>End Time</th>
+                <td mat-cell *matCellDef="let element"> {{formatTimeslotToString(element.endTime)}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let element"> ${{ userDetailed.price }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element" class="action-link">
+                  <a [routerLink]="">
+                      <mat-icon class="mat-icon text-dark" inline=true (click)="addToCart(element)">add_shopping_cart</mat-icon>
+                  </a>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+<!--          </div>-->
+        </div>
+<!--      </div>-->
+    </div>
   </div>
 </div>
