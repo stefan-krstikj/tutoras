@@ -8,6 +8,7 @@ import {AuthGuard} from './auth.guard';
 import {UserProfileComponent} from './profile-settings-page/user-profile/user-profile.component';
 import {ProfileSettingsMainComponent} from './profile-settings-page/profile-settings-main/profile-settings-main.component';
 import {ProfileViewComponent} from './profile-view/profile-view.component';
+import {CartComponent} from './cart/cart.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginDialogComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileSettingsMainComponent, canActivate: [AuthGuard]},
   {path: 'profile/:id', component: ProfileViewComponent, canActivate: [AuthGuard]},
+  {path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'login'},
 ];
 

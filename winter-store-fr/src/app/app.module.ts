@@ -27,6 +27,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CartComponent } from './cart/cart.component';
 
 
 
@@ -45,6 +46,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SearchDialogComponent,
     ProfileViewComponent,
     PageNotFoundComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

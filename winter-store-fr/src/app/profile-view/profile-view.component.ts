@@ -34,7 +34,7 @@ export class ProfileViewComponent implements OnInit {
   disableTable = false;
 
   timeslotSelected: UserTimeslot;
-  subjectSelected: Subject;
+  subjectSelected: string;
 
   displayMissingSubjectSelection = false;
 
@@ -49,41 +49,41 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
-  fetchUserDetails(){
+  fetchUserDetails() {
     this.userService.getUserDetailsForUserId(this.userId)
       .subscribe(response => {
         // todo redirect if its logged user profile
         this.dataSource = new MatTableDataSource(response.freeTimeSlots);
-        this.dataSource.sort = this.sort
+        this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
-        console.log('userDetailed', response)
+        console.log('userDetailed', response);
         return this.userDetailed = response;
-      })
+      });
   }
 
   formatTimeslotToString(timeSlot: Timeslot): string {
-    let string = timeSlot.day < 10 ? '0' + timeSlot.day : '' + timeSlot.day
-    string+= ' ' + MonthsEnum[timeSlot.month] + ' ' + timeSlot.year + ' ';
-    timeSlot.hour < 10 ? string+='0'+timeSlot.hour+':' : string+=timeSlot.hour+':';
-    timeSlot.minute < 10 ? string+='0'+timeSlot.minute : string+=timeSlot.minute;
+    let string = timeSlot.day < 10 ? '0' + timeSlot.day : '' + timeSlot.day;
+    string += ' ' + MonthsEnum[timeSlot.month] + ' ' + timeSlot.year + ' ';
+    timeSlot.hour < 10 ? string += '0' + timeSlot.hour + ':' : string += timeSlot.hour + ':';
+    timeSlot.minute < 10 ? string += '0' + timeSlot.minute : string += timeSlot.minute;
     return string;
   }
 
-  selectTimeslot(userTimeslot: UserTimeslot, event: any){
-    if(this.disableTable)
+  selectTimeslot(userTimeslot: UserTimeslot, event: any) {
+    if (this.disableTable) {
       return;
-    event.target.textContent = 'not_interested'
-    console.log("received", userTimeslot);
+    }
+    event.target.textContent = 'not_interested';
+    console.log('received', userTimeslot);
     this.disableTable = true;
     this.timeslotSelected = userTimeslot;
   }
 
-  addToCart(){
-    if(!this.subjectSelected){
+  addToCart() {
+    if (!this.subjectSelected) {
       this.displayMissingSubjectSelection = true;
       return;
     }
-
     this.cartService.addToCart(this.subjectSelected, this.timeslotSelected, this.userDetailed);
   }
 }

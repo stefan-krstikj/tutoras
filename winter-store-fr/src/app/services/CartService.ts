@@ -3,20 +3,38 @@ import {Subject} from '../model/subject';
 import {UserTimeslot} from '../model/user-timeslot';
 import {UserDetailed} from '../model/user-detailed';
 import {HttpClient} from '@angular/common/http';
+import {AuthService} from './AuthService';
+import {Observable} from 'rxjs';
+import {CartItem} from '../model/cart-item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private auth: AuthService) {
   }
-  addToCart(subject: Subject, userTimeslot: UserTimeslot, userDetailed: UserDetailed){
-      this.http.post('http://localhost:8082/api/cart/add', {
-        timslotId: userTimeslot.id,
-        subjectId: subject.id,
-        userDetailedFromUsername: localStorage.getItem('username'),
-        userDetailedToId: userDetailed.id
-      }).subscribe(response => console.log('add to cart response', response))
+
+  addToCart(subject: string, userTimeslot: UserTimeslot, userDetailed: UserDetailed) {
+    console.log('subject', subject)
+    this.http.post('http://localhost:8082/api/cart/add', {
+      timeslotId: userTimeslot.id,
+      subjectName: subject,
+      userDetailedFromUsername: localStorage.getItem('username'),
+      userDetailedToId: userDetailed.id
+    }).subscribe(response => console.log('add to cart response', response));
+  }
+
+  getCartItemsForSignedInUser(): Observable<CartItem[]> {
+    let username = this.auth.getAuthenticatedUsername();
+    return this.http.get<CartItem[]>(`http://localhost:8082/api/cart/${username}`);
+  }
+
+  deleteCartItem(cartItem: CartItem): Observable<string>{
+    return this.http.post<string>('http://localhost:8082/api/cart/delete', {
+      username: localStorage.getItem('username'),
+      cartItem: cartItem
+    })
   }
 }

@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="card-body">
+      <h5 class="card-title mb-3">Cart</h5>
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc"
+             class="card-signin w-100">
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="id">No.</th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tutor">
+          <th mat-header-cell *matHeaderCellDef>Tutor</th>
+          <td mat-cell *matCellDef="let element">
+            <img src="assets/thispersondoesnotexist/image-1.jpeg" class="rounded-circle" style="height: 1.7rem; width: 1.7rem">
+            {{element.userTo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="subject">
+          <th mat-header-cell *matHeaderCellDef>Subject</th>
+          <td mat-cell *matCellDef="let element"> {{element.subject.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="pl-3">Price</th>
+          <td mat-cell *matCellDef="let element" class="pl-3"> ${{element.price}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element" class="action-link">
+            <a [routerLink]="">
+              <mat-icon class="mat-icon text-dark" inline=true
+              (click)="deleteCartItem(element)">
+                delete</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div class="d-flex justify-content-end align-items-md-center align-middle mb-2 p-2">
+        <h6 class="mr-3 mb-0">Total: </h6>
+        <h6 class="mr-3 mb-0">$50</h6>
+        <button class="btn btn-primary">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>

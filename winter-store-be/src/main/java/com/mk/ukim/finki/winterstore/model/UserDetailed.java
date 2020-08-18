@@ -152,4 +152,11 @@ public class UserDetailed {
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
+
+    public void addToCart(CartItem cartItem){
+        this.getCart().addItemToCart(cartItem);
+    }
+    public void removeFromCart(CartItem cartItem){
+        this.getCart().removeItemFromCart(cartItem);
+    }
 }

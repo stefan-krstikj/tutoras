@@ -2,15 +2,23 @@ package com.mk.ukim.finki.winterstore.model.requests;
 
 public class AddToCartRequest {
     private Integer timeslotId;
-    private Integer subjectId;
+    private String subjectName;
     private String userDetailedFromUsername;
     private Integer userDetailedToId;
 
-    public AddToCartRequest(Integer timeslotId, Integer subjectId, String userDetailedFromUsername, Integer userDetailedToId) {
+    public AddToCartRequest(Integer timeslotId, String subjectName, String userDetailedFromUsername, Integer userDetailedToId) {
         this.timeslotId = timeslotId;
-        this.subjectId = subjectId;
+        this.subjectName = subjectName;
         this.userDetailedFromUsername = userDetailedFromUsername;
         this.userDetailedToId = userDetailedToId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     public Integer getTimeslotId() {
@@ -19,14 +27,6 @@ public class AddToCartRequest {
 
     public void setTimeslotId(Integer timeslotId) {
         this.timeslotId = timeslotId;
-    }
-
-    public Integer getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Integer subjectId) {
-        this.subjectId = subjectId;
     }
 
     public String getUserDetailedFromUsername() {

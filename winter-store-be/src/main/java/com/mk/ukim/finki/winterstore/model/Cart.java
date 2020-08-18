@@ -63,4 +63,6 @@ public class Cart {
     public void addItemToCart(CartItem cartItem){
         this.cartItems.add(cartItem);
     }
+
+    public void removeItemFromCart(CartItem cartItem){ this.cartItems.remove(cartItem);}
 }

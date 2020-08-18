@@ -1,17 +1,14 @@
 package com.mk.ukim.finki.winterstore.service;
 
-import com.mk.ukim.finki.winterstore.model.Role;
-import com.mk.ukim.finki.winterstore.model.Subject;
-import com.mk.ukim.finki.winterstore.model.TimeSlot;
-import com.mk.ukim.finki.winterstore.model.UserDetailed;
-import com.mk.ukim.finki.winterstore.model.response.SubjectResponse;
-import com.mk.ukim.finki.winterstore.model.response.TimeslotResponse;
-import com.mk.ukim.finki.winterstore.model.response.UserDetailedResponse;
-import com.mk.ukim.finki.winterstore.model.response.UserTimeslotResponse;
+import com.mk.ukim.finki.winterstore.model.*;
+import com.mk.ukim.finki.winterstore.model.response.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class MappingService {
     public static List<UserTimeslotResponse> mapTimeSlotToTimeSlotResposne(Set<TimeSlot> timeSlots) {
@@ -35,12 +32,18 @@ public class MappingService {
             return list;
     }
 
-    public static List<SubjectResponse> mapSubjectToSubjectResponse(Set<Subject> subjects) {
+    public static List<SubjectResponse> mapSubjectsToSubjectResponse(Set<Subject> subjects) {
         List<SubjectResponse> list = new ArrayList<>();
         for (Subject s : subjects)
-            list.add(new SubjectResponse(s.getId(), s.getName()));
+            list.add(mapSubjectToSubjectResponse(s));
         return list;
     }
+
+    public static SubjectResponse mapSubjectToSubjectResponse(Subject subjects) {
+        return new SubjectResponse(subjects.getId(), subjects.getName());
+    }
+
+
 
     public static UserDetailedResponse mapUserDetailedToUserDetailedResponse(UserDetailed userDetailed){
         return new UserDetailedResponse(
@@ -48,7 +51,16 @@ public class MappingService {
                 userDetailed.getLastName(), userDetailed.getPhoneNumber(),
                 userDetailed.getBiography(),
                 mapTimeSlotToTimeSlotResposne(userDetailed.getTimeSlots()),
-                mapSubjectToSubjectResponse(userDetailed.getSubjects()),
+                mapSubjectsToSubjectResponse(userDetailed.getSubjects()),
                 userDetailed.getUser().getRole().getName(), userDetailed.getRating(), userDetailed.getPrice());
+    }
+
+    public static List<CartItemResponse> mapCartItemsToCartItemResponse(Set<CartItem> cartItems){
+        return cartItems.stream().map(MappingService::mapCartItemToCartItemResponse).collect(Collectors.toList());
+    }
+
+    public static CartItemResponse mapCartItemToCartItemResponse(CartItem cartItem){
+        return new CartItemResponse(cartItem.getId(), cartItem.getUserTo().getUsername(),
+                cartItem.getPrice(), mapSubjectToSubjectResponse(cartItem.getUserToSubject()));
     }
 }
