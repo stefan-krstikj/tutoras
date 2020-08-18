@@ -72,8 +72,10 @@
             <select class="form-control" [(ngModel)]="subjectSelected" name="subjectSelected">
               <option *ngFor="let subject of userDetailed.subjects">{{subject.name}}</option>
             </select>
+
             <small class="text-muted text-danger" *ngIf="displayMissingSubjectSelection">A subject is requiered</small>
             <button class="btn btn-primary float-right mt-2" (click)="addToCart()">Add to cart</button>
+
           </div>
         </div>
       </div>

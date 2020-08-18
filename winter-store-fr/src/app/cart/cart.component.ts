@@ -12,6 +12,7 @@ import {Timeslot} from '../model/timeslot';
 export class CartComponent implements OnInit {
   dataSource;
   displayedColumns: string[];
+  totalPrice = 0;
 
   constructor(private cartService: CartService) { }
 
@@ -23,7 +24,11 @@ export class CartComponent implements OnInit {
   getCartItemsForSignedInUser(){
     this.cartService.getCartItemsForSignedInUser()
       .subscribe((response: CartItem[]) => {
+        this.totalPrice = 0
         this.dataSource = new MatTableDataSource(response);
+        for(let item of response){
+          this.totalPrice += item.price;
+        }
       })
   }
 

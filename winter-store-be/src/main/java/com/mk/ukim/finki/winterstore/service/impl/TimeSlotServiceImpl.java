@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeSlotServiceImpl implements TimeSlotService {
@@ -32,7 +33,10 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     @Override
     public List<UserTimeslotResponse> findTimeslotsForUsername(String username) {
         UserDetailed userDetailed = userDetailedRepository.findByUserUsername(username);
-        Set<TimeSlot> timeslots = userDetailed.getTimeSlots();
+        Set<TimeSlot> timeslots = userDetailed.getTimeSlots()
+                .stream()
+                .filter(TimeSlot::getAvailable)
+                .collect(Collectors.toSet());
         return MappingService.mapTimeSlotToTimeSlotResposne(timeslots);
     }
 

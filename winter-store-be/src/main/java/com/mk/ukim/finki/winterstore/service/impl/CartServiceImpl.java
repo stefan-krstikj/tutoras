@@ -34,6 +34,8 @@ public class CartServiceImpl implements CartService {
 
     public StringResponse addToCart(AddToCartRequest request){
         TimeSlot timeslot = timeSlotRepository.findById(request.getTimeslotId());
+        timeslot.setAvailable(false);
+        timeSlotRepository.save(timeslot);
         Subject subject = subjectRepository.findByName(request.getSubjectName());
         User userFrom = userRepository.findByUsername(request.getUserDetailedFromUsername());
         UserDetailed userDetailedTo = userDetailedRepository.findById(request.getUserDetailedToId());

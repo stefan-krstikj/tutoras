@@ -16,14 +16,13 @@ export class CartService {
               private auth: AuthService) {
   }
 
-  addToCart(subject: string, userTimeslot: UserTimeslot, userDetailed: UserDetailed) {
-    console.log('subject', subject)
-    this.http.post('http://localhost:8082/api/cart/add', {
+  addToCart(subject: string, userTimeslot: UserTimeslot, userDetailed: UserDetailed): Observable<string> {
+    return this.http.post<string>('http://localhost:8082/api/cart/add', {
       timeslotId: userTimeslot.id,
       subjectName: subject,
       userDetailedFromUsername: localStorage.getItem('username'),
       userDetailedToId: userDetailed.id
-    }).subscribe(response => console.log('add to cart response', response));
+    });
   }
 
   getCartItemsForSignedInUser(): Observable<CartItem[]> {
