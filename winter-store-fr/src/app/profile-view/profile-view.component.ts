@@ -69,9 +69,10 @@ export class ProfileViewComponent implements OnInit {
     return string;
   }
 
-  selectTimeslot(userTimeslot: UserTimeslot){
+  selectTimeslot(userTimeslot: UserTimeslot, event: any){
     if(this.disableTable)
       return;
+    event.target.textContent = 'not_interested'
     console.log("received", userTimeslot);
     this.disableTable = true;
     this.timeslotSelected = userTimeslot;

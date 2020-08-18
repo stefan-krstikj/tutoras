@@ -53,7 +53,7 @@
                 <td mat-cell *matCellDef="let element" class="action-link">
                   <a [routerLink]="">
                     <mat-icon class="mat-icon text-dark" inline=true
-                              (click)="selectTimeslot(element)"
+                              (click)="selectTimeslot(element, $event)"
                               [class.disabled-cursor]="disableTable">
                       check</mat-icon>
                   </a>

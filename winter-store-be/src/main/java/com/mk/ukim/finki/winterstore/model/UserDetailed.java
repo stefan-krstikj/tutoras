@@ -50,11 +50,23 @@ public class UserDetailed {
     @JsonIgnore
     private Set<Subject> subjects = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
+
     private Integer rating = 0;
 
     private Integer price = 0;
 
     public UserDetailed() {
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Integer getRating() {

@@ -20,6 +20,8 @@ export class AuthService {
     if (this.isAuthenticated()) {
       return localStorage.getItem('username');
     }
+    else
+      localStorage.clear()
     return null;
   }
 
