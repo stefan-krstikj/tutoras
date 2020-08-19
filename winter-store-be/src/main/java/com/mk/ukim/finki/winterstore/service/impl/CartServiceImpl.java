@@ -2,6 +2,7 @@ package com.mk.ukim.finki.winterstore.service.impl;
 
 import com.mk.ukim.finki.winterstore.model.*;
 import com.mk.ukim.finki.winterstore.model.requests.AddToCartRequest;
+import com.mk.ukim.finki.winterstore.model.requests.ChargeRequest;
 import com.mk.ukim.finki.winterstore.model.requests.DeleteFromCartRequest;
 import com.mk.ukim.finki.winterstore.model.response.CartItemResponse;
 import com.mk.ukim.finki.winterstore.model.response.StringResponse;
@@ -10,6 +11,7 @@ import com.mk.ukim.finki.winterstore.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import static com.mk.ukim.finki.winterstore.service.MappingService.mapCartItemToCartItemResponse;
@@ -58,5 +60,13 @@ public class CartServiceImpl implements CartService {
     public List<CartItemResponse> getCartItems(String username){
         UserDetailed userDetailed = userDetailedRepository.findByUserUsername(username);
         return mapCartItemsToCartItemResponse(userDetailed.getCart().getCartItems());
+    }
+
+    @Override
+    public StringResponse checkout(ChargeRequest chargeRequest) {
+        UserDetailed userDetailed = userDetailedRepository.findByUserUsername(chargeRequest.getUsername());
+        userDetailed.getCart().setCartItems(new HashSet<>());
+        userDetailedRepository.save(userDetailed);
+        return new StringResponse("Successfully payed");
     }
 }

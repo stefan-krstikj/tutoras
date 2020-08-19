@@ -14,8 +14,7 @@ export class LoginDialogComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    if (this.authService.getAuthenticatedUsername) {
-      console.log('authenticated username: ', this.authService.getAuthenticatedUsername);
+    if (this.authService.isAuthenticated()) {
       this.router.navigate(['home']);
     }
   }

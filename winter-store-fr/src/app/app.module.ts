@@ -28,6 +28,8 @@ import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CartComponent } from './cart/cart.component';
+import { StripePaymentComponent } from './stripe-payment/stripe-payment.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -47,6 +49,7 @@ import { CartComponent } from './cart/cart.component';
     ProfileViewComponent,
     PageNotFoundComponent,
     CartComponent,
+    StripePaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import { CartComponent } from './cart/cart.component';
     MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   // tslint:disable-next-line:max-line-length
   providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

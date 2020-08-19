@@ -20,14 +20,17 @@ export class AuthService {
     if (this.isAuthenticated()) {
       return localStorage.getItem('username');
     }
-    else
-      localStorage.clear()
+
     return null;
   }
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    return !this.jwtHelperService.isTokenExpired(token);
+    if(this.jwtHelperService.isTokenExpired(token)){
+      localStorage.clear()
+      return false;
+    }
+    return true
   }
 
 
