@@ -21,8 +21,8 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" *ngIf="isAuthenticated()">
-      <mat-icon class="mat-icon ml-3 mr-3" inline=true [routerLink]="['/cart']">shopping_cart</mat-icon>
-
+      <a class="nav-link text-decoration-none text-muted">{{userDetailed.firstName}} {{userDetailed.lastName}}</a>
+      <mat-icon *ngIf="userDetailed.role==='student'" class="mat-icon ml-3 mr-3" inline=true [routerLink]="['/cart']">shopping_cart</mat-icon>
       <!-- Split dropleft button -->
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"

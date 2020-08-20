@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LoginDialogComponent} from './unauthorized-page/login-dialog/login-dialog.component';
+import {LoginDialogComponent} from './login-pages/login-dialog/login-dialog.component';
 import {RouterModule, Routes} from '@angular/router';
-import {SignupDialogComponent} from './unauthorized-page/signup-dialog/signup-dialog.component';
+import {SignupDialogComponent} from './login-pages/signup-dialog/signup-dialog.component';
 import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './auth.guard';
 import {UserProfileComponent} from './my-profile-settings-page/user-profile/user-profile.component';

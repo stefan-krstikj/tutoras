@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { LoginDialogComponent } from './unauthorized-page/login-dialog/login-dialog.component';
+import { LoginDialogComponent } from './login-pages/login-dialog/login-dialog.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SignupDialogComponent } from './unauthorized-page/signup-dialog/signup-dialog.component';
+import { SignupDialogComponent } from './login-pages/signup-dialog/signup-dialog.component';
 import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
@@ -26,7 +26,6 @@ import {MatInputModule} from '@angular/material/input';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CartComponent } from './cart/cart.component';
 import { StripePaymentComponent } from './stripe-payment/stripe-payment.component';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -47,7 +46,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     SearchResultsComponent,
     SearchDialogComponent,
     ProfileViewComponent,
-    PageNotFoundComponent,
     CartComponent,
     StripePaymentComponent,
   ],

@@ -37,9 +37,8 @@ export class UserService {
     );
   }
 
-  updateDetails(userDetailed: UserDetailed): void {
-    console.log('sending updated details', userDetailed);
-    this.http.post('http://localhost:8082/api/users/update-details', {
+  updateDetails(userDetailed: UserDetailed): Observable<string> {
+    return this.http.post<string>('http://localhost:8082/api/users/update-details', {
       firstName: userDetailed.firstName,
       lastName: userDetailed.lastName,
       id: userDetailed.id,
@@ -47,7 +46,7 @@ export class UserService {
       phoneNumber: userDetailed.phoneNumber,
       role: userDetailed.role,
       price: userDetailed.price
-    }).subscribe(response => console.log('response', response));
+    });
   }
 
   updateSubjects(subjects: Subject[]): void{

@@ -56,7 +56,7 @@ export class ProfileViewComponent implements OnInit {
         this.dataSource = new MatTableDataSource(response.freeTimeSlots);
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
-        return this.userDetailed = response;
+        this.userDetailed = response;
       });
   }
 
@@ -83,6 +83,7 @@ export class ProfileViewComponent implements OnInit {
       this.displayMissingSubjectSelection = true;
       return;
     }
+
     this.cartService.addToCart(this.subjectSelected, this.timeslotSelected, this.userDetailed)
       .subscribe(response => {
         this.disableTable = false;

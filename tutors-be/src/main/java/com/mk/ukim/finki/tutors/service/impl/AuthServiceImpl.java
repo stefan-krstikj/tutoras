@@ -1,16 +1,14 @@
 package com.mk.ukim.finki.tutors.service.impl;
 
 import com.mk.ukim.finki.tutors.jwt.JwtTokenUtil;
+import com.mk.ukim.finki.tutors.model.Cart;
 import com.mk.ukim.finki.tutors.model.Role;
 import com.mk.ukim.finki.tutors.model.UserDetailed;
 import com.mk.ukim.finki.tutors.model.requests.SignupRequest;
 import com.mk.ukim.finki.tutors.model.User;
 import com.mk.ukim.finki.tutors.model.response.LoginResponse;
 import com.mk.ukim.finki.tutors.model.response.StringResponse;
-import com.mk.ukim.finki.tutors.repository.RoleRepository;
-import com.mk.ukim.finki.tutors.repository.SubjectRepository;
-import com.mk.ukim.finki.tutors.repository.UserDetailedRepository;
-import com.mk.ukim.finki.tutors.repository.UserRepository;
+import com.mk.ukim.finki.tutors.repository.*;
 import com.mk.ukim.finki.tutors.service.AuthService;
 import com.mk.ukim.finki.tutors.service.UserService;
 import com.mk.ukim.finki.tutors.validators.UserValidator;
@@ -27,6 +25,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -43,6 +43,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     SubjectRepository subjectRepository;
+
+    @Autowired
+    CartRepository cartRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -84,11 +87,20 @@ public class AuthServiceImpl implements AuthService {
         User user = new User(signUpRequest.getUsername(), this.passwordEncoder.encode(signUpRequest.getPassword()), role);
 
         UserDetailed userDetailed = new UserDetailed();
-        userDetailed.setFirstName(signUpRequest.getName());
+        userDetailed.setFirstName(signUpRequest.getName().split(" ")[0]);
+        if(signUpRequest.getName().split(" ").length > 1)
+            userDetailed.setLastName(signUpRequest.getName().split(" ")[1]);
         userDetailed.setUser(user);
+
+        Cart cart = new Cart();
+        cart.setCreateDate(LocalDateTime.now());
+        cart.setUserDetailed(userDetailed);
+        userDetailed.setCart(cart);
 
         this.userDetailedRepository.save(userDetailed);
         this.userService.registerUser(user);
+        this.cartRepository.save(cart);
+
         return new StringResponse("Successful signup");
     }
 

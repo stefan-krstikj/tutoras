@@ -13,6 +13,8 @@ export class UserProfileComponent implements OnInit {
     rating: 0,
     role: '', id: 0, freeTimeSlots: [], subjects: [], biography: '', firstName: '', lastName: '', phoneNumber: ''
   };
+
+  displayUpdatedMessage = false;
   email = localStorage.getItem('username');
   password = '';
   repeatPassword = '';
@@ -44,7 +46,10 @@ export class UserProfileComponent implements OnInit {
 
   update(): void {
     this.userDetailed.role = this.radioSelected;
-    this.userService.updateDetails(this.userDetailed);
+    this.userService.updateDetails(this.userDetailed)
+      .subscribe(response => {
+        this.displayUpdatedMessage = true;
+      });
   }
 
   capitalizeFirstLetter(word: string): string {
