@@ -17,6 +17,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class ProfileTimetableComponent implements OnInit {
 
   dataSource;
+  data;
   displayedColumns: string[];
 
   model: NgbDateStruct;
@@ -38,7 +39,8 @@ export class ProfileTimetableComponent implements OnInit {
   getTimeslots(): void {
     this.userService.getUserDetailsForSignedInUser()
       .subscribe(response => {
-        this.dataSource = new MatTableDataSource(response.freeTimeSlots);
+        this.data = response.freeTimeSlots;
+        this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.sort = this.sort
         this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
       });
@@ -46,8 +48,11 @@ export class ProfileTimetableComponent implements OnInit {
 
   deleteTimeslot(timeslot: UserTimeslot) {
     console.log('deleting', timeslot)
-    this.dataSource = this.dataSource.filter(it => it !== timeslot);
-    this.userService.deleteTimeslot(timeslot);
+    this.data = this.data.filter(it => it !== timeslot);
+    this.userService.deleteTimeslot(timeslot)
+      .subscribe(response => {
+        this.getTimeslots()
+      });
   }
 
   addNewTimeslot() {

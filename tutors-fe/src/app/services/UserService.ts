@@ -65,12 +65,12 @@ export class UserService {
     })
   }
 
-  deleteTimeslot(timeslot: UserTimeslot){
-    this.http.post('http://localhost:8082/api/users/delete-timeslot', {
+  deleteTimeslot(timeslot: UserTimeslot): Observable<string>{
+    return this.http.post<string>('http://localhost:8082/api/users/delete-timeslot', {
       username: localStorage.getItem('username'),
       id: timeslot.id,
       timeslot: timeslot
-    }).subscribe(response => console.log('response', response))
+    })
   }
 
   findTutorsForSubject(subject: Subject): Observable<UserDetailed[]>{

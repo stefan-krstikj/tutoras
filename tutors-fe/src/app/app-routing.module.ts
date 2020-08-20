@@ -5,8 +5,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {SignupDialogComponent} from './unauthorized-page/signup-dialog/signup-dialog.component';
 import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './auth.guard';
-import {UserProfileComponent} from './profile-settings-page/user-profile/user-profile.component';
-import {ProfileSettingsMainComponent} from './profile-settings-page/profile-settings-main/profile-settings-main.component';
+import {UserProfileComponent} from './my-profile-settings-page/user-profile/user-profile.component';
+import {ProfileSettingsMainComponent} from './my-profile-settings-page/profile-settings-main/profile-settings-main.component';
 import {ProfileViewComponent} from './profile-view/profile-view.component';
 import {CartComponent} from './cart/cart.component';
 
