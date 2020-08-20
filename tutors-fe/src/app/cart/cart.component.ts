@@ -53,12 +53,8 @@ export class CartComponent implements OnInit {
       // waiting for stripe token that will be given back
       .subscribe((result: any) => {
         if (result) {
-          this.createOrder(result.token.id);
+          window.location.reload();
         }
       });
-  }
-
-  createOrder(token: number){
-
   }
 }
