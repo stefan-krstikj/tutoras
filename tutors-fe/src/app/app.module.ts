@@ -29,6 +29,7 @@ import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { CartComponent } from './cart/cart.component';
 import { StripePaymentComponent } from './stripe-payment/stripe-payment.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -62,7 +63,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   // tslint:disable-next-line:max-line-length
   providers: [[{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

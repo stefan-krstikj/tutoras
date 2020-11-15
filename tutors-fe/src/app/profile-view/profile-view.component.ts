@@ -10,6 +10,7 @@ import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import {UserTimeslot} from '../model/user-timeslot';
 import {Subject} from '../model/subject';
 import {CartService} from '../services/CartService';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile-view',
@@ -21,6 +22,7 @@ export class ProfileViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private userService: UserService,
               private cartService: CartService,
+              private snackBar: MatSnackBar,
               config: NgbRatingConfig) {
     config.max = 5;
     config.readonly = true;
@@ -86,6 +88,9 @@ export class ProfileViewComponent implements OnInit {
 
     this.cartService.addToCart(this.subjectSelected, this.timeslotSelected, this.userDetailed)
       .subscribe(response => {
+        this.snackBar.open('Added to cart', 'Close', {
+          duration: 2000
+        });
         this.disableTable = false;
         this.fetchUserDetails();
       });
